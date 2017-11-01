@@ -1,6 +1,6 @@
 import Expo from "expo";
 import React from "react";
-import App from "./js/App";
+import App from "./js/index";
 
 export default class Saroo extends React.Component {
   constructor() {

@@ -1,7 +1,9 @@
 {
   "name": "Saroo",
   "version": "0.1.1",
+  "license": "MIT",
   "devDependencies": {
+    "babel-plugin-module-resolver": "^2.7.1",
     "jest-expo": "^22.0.0",
     "react-native-scripts": "1.6.0",
     "react-test-renderer": "16.0.0-beta.5"
