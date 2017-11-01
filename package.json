@@ -1,7 +1,6 @@
 {
-  "name": "saroo",
-  "version": "0.1.0",
-  "private": true,
+  "name": "Saroo",
+  "version": "0.1.1",
   "devDependencies": {
     "jest-expo": "^22.0.0",
     "react-native-scripts": "1.6.0",

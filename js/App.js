@@ -1,44 +1,66 @@
 
-import React from "react";
+import React from 'react';
 
-import { Platform, StatusBar } from "react-native";
-import { Root, Footer, FooterTab, Button, Icon } from "native-base";
-import { StackNavigator } from "react-navigation";
+import { Platform, StatusBar } from 'react-native';
+import { Root, Footer, FooterTab, Button, Icon } from 'native-base';
+import { TabNavigator } from 'react-navigation';
 
-import Simple from "./components/simple";
+import Overview from './components/Overview/index';
+import Savings from './components/Savings/index';
+import Stats from './components/Stats/index';
+import Groups from './components/Groups/index';
+import Configuration from './components/Configuration/index';
 
-const AppNavigator = StackNavigator(
+export default (MainScreenNavigator = TabNavigator(
   {
-      Overview: { screen: Simple },
-      Savings: { screen: Simple },
-      Stats: { screen: Simple },
-      Stats: { screen: Simple },
-      Groups: { screen: Simple },
-      Config: { screen: Simple },
+    Overview: { screen: Overview },
+    Savings: { screen: Savings },
+    Stats: { screen: Stats },
+    Groups: { screen: Groups },
+    Configuration: { screen: Configuration },
   },
   {
-      initialRouteName: "Overview",
-      headerMode: "none",
-  },
-);
+    initialRouteName: "Overview",
+    tabBarPosition: 'bottom',
+    tabBarComponent: props => {
+      const { navigate } = props.navigation;
 
-export default () =>
-    <Root>
-        <AppNavigator />
+      return (
         <Footer>
           <FooterTab>
-            <Button>
-              <Icon name="apps" />
+            <Button
+              active={props.navigationState.index === 0}
+              onPress={() => navigate('Overview')}
+            >
+              <Icon name="ios-list-box"/>
             </Button>
-            <Button>
-              <Icon name="plane" />
+            <Button
+              active={props.navigationState.index === 1}
+              onPress={() => navigate('Savings')}
+            >
+              <Icon name="plane"/>
             </Button>
-            <Button>
-              <Icon name="pie-graph" />
+            <Button
+              active={props.navigationState.index === 2}
+              onPress={() => navigate('Stats')}
+            >
+              <Icon name="ios-podium"/>
             </Button>
-            <Button>
-              <Icon name="person-stalker" />
+            <Button
+              active={props.navigationState.index === 3}
+              onPress={() => navigate('Groups')}
+            >
+              <Icon name="md-people"/>
+            </Button>
+            <Button
+              active={props.navigationState.index === 4}
+              onPress={() => navigate('Configuration')}
+            >
+              <Icon name="md-settings"/>
             </Button>
           </FooterTab>
         </Footer>
-    </Root>;
+      );
+    }
+  },
+));

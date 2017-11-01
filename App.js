@@ -2,7 +2,7 @@ import Expo from "expo";
 import React from "react";
 import App from "./js/App";
 
-export default class App1 extends React.Component {
+export default class Saroo extends React.Component {
   constructor() {
     super();
     this.state = {
