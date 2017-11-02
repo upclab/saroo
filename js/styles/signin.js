@@ -16,6 +16,7 @@ export default StyleSheet.create({
   fieldsContainer: {
     paddingLeft: 24,
     paddingRight: 24,
+    alignItems: 'center',
   },
   field: {
     paddingTop: 16,
@@ -24,15 +25,14 @@ export default StyleSheet.create({
   loginButton: {
     marginTop: 36,
   },
-  forgotPasswordText: {
+  loginActionsText: {
     color: '#2699FB',
-    fontSize: 14,
     textAlign: 'center',
   },
   socialButtonWrapper: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
   },
   socialButton: {
@@ -44,5 +44,9 @@ export default StyleSheet.create({
   },
   googleButton: {
     color: '#d62d20',
+  },
+  signUpTextWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   }
 });
