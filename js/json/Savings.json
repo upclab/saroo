@@ -1,22 +1,22 @@
 {
     "sv00": {
         "nombre": "Televisor 4K",
-        "meta": 4000.00,
-        "actual": 1500.00
+        "meta": 4000,
+        "actual": 1500
     },
     "sv01": {
         "nombre": "Universidad de Percy",
-        "meta": 100000.00,
-        "actual": 60000.00
+        "meta": 100000,
+        "actual": 60000
     },
     "sv02": {
         "nombre": "Remodelación Casa",
-        "meta": 2000.00,
-        "actual": 700.00
+        "meta": 2000,
+        "actual": 700
     },
     "sv03": {
-        "nombre": "Viaje Disneyland",
-        "meta": 8000.00,
-        "actual": 2700.00
+        "nombre": "Viaje a Disneyland",
+        "meta": 8000,
+        "actual": 2700
     }
 }
