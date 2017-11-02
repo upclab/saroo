@@ -11,26 +11,21 @@ import Stats from "./screens/Stats";
 import Groups from "./screens/Groups";
 import Configuration from "./screens/Configuration";
 
-const headerStyle = {
-  marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
-};
-
-export const SignedOut = StackNavigator({
-  SignUp: {
-    screen: SignUp,
-    navigationOptions: {
-      title: "Sign Up",
-      headerStyle
-    }
+export const SignedOut = StackNavigator(
+  {
+    SignIn: {
+      screen: SignIn,
+    },
+    SignUp: {
+      screen: SignUp,
+    },
   },
-  SignIn: {
-    screen: SignIn,
+  {
     navigationOptions: {
-      title: "Sign In",
-      headerStyle
+      header: null
     }
   }
-});
+);
 
 export const SignedIn = TabNavigator(
   {
@@ -43,11 +38,6 @@ export const SignedIn = TabNavigator(
   {
     initialRouteName: "Overview",
     tabBarPosition: 'bottom',
-    tabBarOptions: {
-      style: {
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
-      }
-    },
     tabBarComponent: props => {
       const { navigate } = props.navigation;
 
@@ -96,15 +86,9 @@ export const createRootNavigator = (signedIn = false) => {
     {
       SignedIn: {
         screen: SignedIn,
-        navigationOptions: {
-          gesturesEnabled: false
-        }
       },
       SignedOut: {
         screen: SignedOut,
-        navigationOptions: {
-          gesturesEnabled: false
-        }
       }
     },
     {

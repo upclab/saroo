@@ -6,6 +6,8 @@
       "alias": {
         "@": "./js",
         "@components": "./js/components",
+        "@styles":  "./js/styles",
+        "@assets":  "./assets",
       }
     }]
   ],
