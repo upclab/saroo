@@ -10,7 +10,7 @@ export default class Savings extends React.Component {
     return (
       <Container style={styles.container}>
         <StatusBar
-          barStyle="dark-content"/>
+          barStyle="light-content"/>
         <Text style={styles.title}>
           Ahorros
         </Text>
@@ -23,14 +23,14 @@ export default class Savings extends React.Component {
             marginRight: 50,
           }}
         />
-        <ScrollView style={styles.content}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.content}>
           {Object.values(data).map((saving, i)=>{
             return(
               <View key={i}>
                 <Text style={styles.savingText}>
                   {saving.nombre}
                 </Text>
-                <Progress.Bar progress={saving.actual/saving.meta} width={600} height={15} style={styles.progressBar}/>
+                <Progress.Bar progress={saving.actual/saving.meta} width={null} height={15} style={styles.progressBar}/>
                 <View style={styles.saving}>
                   <Text style={styles.progressStart}>{toMoney(saving.actual,"S")}</Text>  
                   <Text style={styles.progressEnd}>{toMoney(saving.meta,"S")}</Text>
@@ -66,11 +66,12 @@ function toMoney(amount, type) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    flex : 1,
+    //flex : 1,
   },
   content: {
     marginTop: 30,
-    marginLeft: 50,
+    paddingLeft: 30,
+    paddingRight: 30,
   },
   progressBar: {
     marginTop: 15,
