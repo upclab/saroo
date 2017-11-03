@@ -1,22 +1,22 @@
 {
     "sv00": {
-        "nombre": "Televisor 4K",
+        "name": "Televisor 4K",
         "meta": 4000,
-        "actual": 1500
+        "current": 1500
     },
     "sv01": {
-        "nombre": "Universidad de Percy",
+        "name": "Universidad de Percy",
         "meta": 100000,
-        "actual": 60000
+        "current": 60000
     },
     "sv02": {
-        "nombre": "Remodelación Casa",
+        "name": "Remodelación Casa",
         "meta": 2000,
-        "actual": 700
+        "current": 700
     },
     "sv03": {
-        "nombre": "Viaje a Disneyland",
+        "name": "Viaje a Disneyland",
         "meta": 8000,
-        "actual": 2700
+        "current": 2700
     }
 }
