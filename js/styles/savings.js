@@ -1,10 +1,9 @@
 import { StyleSheet } from 'react-native';
 
-export default savings = StyleSheet.create({
-
+export default StyleSheet.create({
   content: {
     marginTop: 20,
-  },  
+  },
 
   savingText: {
     fontFamily: 'System',

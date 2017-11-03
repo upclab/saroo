@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-export default container = StyleSheet.create({
-  main: { 
+export default StyleSheet.create({
+  main: {
     backgroundColor: 'white',
     paddingLeft: 30,
     paddingRight: 30,
@@ -15,15 +15,15 @@ export default container = StyleSheet.create({
     fontWeight: '800',
   },
 
-  button : {
+  button: {
     marginTop: 20,
     marginBottom: 20,
     backgroundColor: '#EB144C',
   },
-  
+
   buttonText: {
     fontFamily: 'System',
     fontWeight: '600',
     color: 'white',
   },
-})
+});

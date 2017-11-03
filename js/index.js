@@ -1,6 +1,6 @@
-import React from "react";
-import { createRootNavigator } from "./router";
-import { isSignedIn } from "./auth";
+import React from 'react';
+import { createRootNavigator } from './router';
+import { isSignedIn } from './auth';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -8,14 +8,14 @@ export default class App extends React.Component {
 
     this.state = {
       signedIn: false,
-      checkedSignIn: false
+      checkedSignIn: false,
     };
   }
 
   componentWillMount() {
     isSignedIn()
       .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
-      .catch(err => alert("An error occurred"));
+      .catch(err => alert('An error occurred'));
   }
 
   render() {

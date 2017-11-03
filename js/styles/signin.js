@@ -1,7 +1,4 @@
-import React, { StyleSheet } from "react-native";
-const { Dimensions, Platform } = React;
-
-const deviceHeight = Dimensions.get("window").height;
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   logoContainer: {
@@ -11,7 +8,7 @@ export default StyleSheet.create({
   },
   logo: {
     width: 280,
-    height: 100
+    height: 100,
   },
   fieldsContainer: {
     paddingLeft: 24,
@@ -48,5 +45,5 @@ export default StyleSheet.create({
   signUpTextWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
-  }
+  },
 });

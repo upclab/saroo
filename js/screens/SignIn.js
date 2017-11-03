@@ -1,18 +1,18 @@
-import React from "react";
-import { Image, StatusBar, View } from "react-native";
+import React from 'react';
+import { Image, StatusBar, View } from 'react-native';
 import { Button, Container, Content, Footer, Icon, Input, Item, Text } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
-import { onSignIn } from "@/auth";
-import styles from "@styles/signin";
-import sarooStyles from "@styles/saroo";
+import { onSignIn } from '@/auth';
+import styles from '@styles/signin';
+import sarooStyles from '@styles/saroo';
 
-const SarooLogo = require('@assets/saroo-logo.png') 
+const SarooLogo = require('@assets/saroo-logo.png');
 
 export default class SignIn extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
- 
+
     return (
       <Container style={sarooStyles.container}>
         <StatusBar barStyle="light-content" />
@@ -28,10 +28,12 @@ export default class SignIn extends React.Component {
               </Item>
               <Item style={styles.field}>
                 <Icon name="md-lock" />
-                <Input secureTextEntry placeholder="Contraseña"/>
+                <Input secureTextEntry placeholder="Contraseña" />
               </Item>
-              <Button style={styles.loginButton} block
-                onPress={() => onSignIn().then(() => navigate("SignedIn"))}
+              <Button
+                style={styles.loginButton}
+                block
+                onPress={() => onSignIn().then(() => navigate('SignedIn'))}
               >
                 <Text>Ingresar</Text>
               </Button>
@@ -41,14 +43,14 @@ export default class SignIn extends React.Component {
           <Row size={1}>
             <Col style={styles.socialButtonWrapper}>
               <Button rounded light style={styles.socialButton}>
-                <Icon name="logo-facebook" style={styles.facebookButton}/>
+                <Icon name="logo-facebook" style={styles.facebookButton} />
               </Button>
               <Button rounded light style={styles.socialButton}>
-                <Icon name="logo-google" style={styles.googleButton}/>
+                <Icon name="logo-google" style={styles.googleButton} />
               </Button>
             </Col>
           </Row>
-          <Row size={.5}>
+          <Row size={0.5}>
             <Col style={styles.signUpTextWrapper}>
               <Button transparent primary onPress={() => navigate('SignUp')}>
                 <Text>Registrarse</Text>
@@ -57,6 +59,6 @@ export default class SignIn extends React.Component {
           </Row>
         </Grid>
       </Container>
-    )
+    );
   }
 }

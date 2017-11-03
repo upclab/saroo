@@ -1,13 +1,12 @@
 {
-  "extends": "exponent/react",
-  "plugins": [
-    "flowtype",
-  ],
+  "parser": "babel-eslint",
+  "extends": "airbnb",
   "globals": {
-    "document": false,
+    "Expo": true
   },
-  "rules": {
-    "flowtype/define-flow-type": 1,
-    "flowtype/use-flow-type": 1,
-  },
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import"
+  ]
 }
