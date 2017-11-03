@@ -2,12 +2,12 @@
   "presets": ["babel-preset-expo"],
   "plugins": [
     ["module-resolver", {
-      "root": ["./js"],
+      "root": ["."],
       "alias": {
         "@": "./js",
         "@components": "./js/components",
         "@styles":  "./js/styles",
-        "@assets":  "./assets",
+        "@assets":  "./assets"
       }
     }]
   ],
