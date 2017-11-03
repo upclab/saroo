@@ -1,5 +1,4 @@
 import React from 'react';
-import { Platform, StatusBar } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { Button, Footer, FooterTab, Icon } from 'native-base';
 
