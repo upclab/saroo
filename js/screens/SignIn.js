@@ -10,7 +10,7 @@ import sarooStyles from '@styles/saroo';
 const SarooLogo = require('@assets/saroo-logo.png');
 
 export default class SignIn extends React.Component {
-  onFacebookClick() {
+  onFacebookClick = () => {
     const { navigation } = this.props;
 
     signInWithFacebook()
@@ -18,9 +18,9 @@ export default class SignIn extends React.Component {
       .catch(() => Alert.alert('No se pudo ingresar con Facebook!'));
   }
 
-  render() {
+  render = () => {
     const { navigation } = this.props;
-    
+
     return (
       <Container style={sarooStyles.container}>
         <StatusBar barStyle="light-content" />
