@@ -1,31 +1,64 @@
 import React from 'react';
-import { createRootNavigator } from './router';
-import { isSignedIn } from './auth';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
+import { Footer, FooterTab, Button, Icon } from 'native-base';
+import { TabNavigator } from 'react-navigation';
 
-    this.state = {
-      signedIn: false,
-      checkedSignIn: false,
-    };
-  }
+import Overview from '@/screens/Overview';
+import Savings from '@/screens/Savings';
+import Stats from '@/screens/Stats';
+import Groups from '@/screens/Groups';
+import Configuration from '@/screens/Configuration';
 
-  componentWillMount() {
-    isSignedIn()
-      .then(res => this.setState({ signedIn: res, checkedSignIn: true }));
-  }
+export default new TabNavigator(
+  {
+    Overview: { screen: Overview },
+    Savings: { screen: Savings },
+    Stats: { screen: Stats },
+    Groups: { screen: Groups },
+    Configuration: { screen: Configuration },
+  },
+  {
+    initialRouteName: 'Overview',
+    tabBarPosition: 'bottom',
+    tabBarComponent: (props) => {
+      const { navigate } = props.navigation;
 
-  render() {
-    const { checkedSignIn, signedIn } = this.state;
-
-    // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
-    if (!checkedSignIn) {
-      return null;
-    }
-
-    const Layout = createRootNavigator(signedIn);
-    return <Layout />;
-  }
-}
+      return (
+        <Footer>
+          <FooterTab>
+            <Button
+              active={props.navigationState.index === 0}
+              onPress={() => navigate('Overview')}
+            >
+              <Icon name="ios-list-box" />
+            </Button>
+            <Button
+              active={props.navigationState.index === 1}
+              onPress={() => navigate('Savings')}
+            >
+              <Icon name="plane" />
+            </Button>
+            <Button
+              active={props.navigationState.index === 2}
+              onPress={() => navigate('Stats')}
+            >
+              <Icon name="ios-podium" />
+            </Button>
+            <Button
+              active={props.navigationState.index === 3}
+              onPress={() => navigate('Groups')}
+            >
+              <Icon name="md-people" />
+            </Button>
+            <Button
+              active={props.navigationState.index === 4}
+              onPress={() => navigate('Configuration')}
+            >
+              <Icon name="md-settings" />
+            </Button>
+          </FooterTab>
+        </Footer>
+      );
+    },
+  },
+);

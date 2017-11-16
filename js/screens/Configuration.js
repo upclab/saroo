@@ -1,17 +1,19 @@
 import React from 'react';
-import { Button, Container, Content, Text } from 'native-base';
-import { signOut } from '@/auth';
+import { StyleSheet, Text, View } from 'react-native';
 
-import styles from '@/styles/saroo';
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
-export default function ({ navigation }) {
+export default function () {
   return (
-    <Container style={styles.container}>
-      <Content>
-        <Button bordered danger onPress={() => signOut().then(() => navigation.navigate('SignedOut'))}>
-          <Text>Cerrar Sesión</Text>
-        </Button>
-      </Content>
-    </Container>
+    <View style={styles.container}>
+      <Text>Configuraciones!</Text>
+    </View>
   );
 }

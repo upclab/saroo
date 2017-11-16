@@ -2,8 +2,6 @@ import Expo from 'expo';
 import React from 'react';
 import App from './js/index';
 
-import { firebaseApp } from './js/firebaseApp';
-
 const Roboto = require('native-base/Fonts/Roboto.ttf');
 const RobotoMedium = require('native-base/Fonts/Roboto_medium.ttf');
 const Ionicons = require('@expo/vector-icons/fonts/Ionicons.ttf');
