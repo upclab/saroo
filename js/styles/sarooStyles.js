@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-
-export default StyleSheet.create({
-  main: {
+export default {
+  container: {
+    marginTop: Expo.Constants.statusBarHeight,
     backgroundColor: 'white',
     paddingLeft: 30,
     paddingRight: 30,
@@ -9,7 +8,6 @@ export default StyleSheet.create({
 
   title: {
     marginTop: 50,
-    fontFamily: 'System',
     color: 'black',
     fontSize: 27,
     fontWeight: '800',
@@ -22,8 +20,7 @@ export default StyleSheet.create({
   },
 
   buttonText: {
-    fontFamily: 'System',
     fontWeight: '600',
     color: 'white',
   },
-});
+};
