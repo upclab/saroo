@@ -9,6 +9,11 @@ const Ionicons = require('@expo/vector-icons/fonts/Ionicons.ttf');
 export default class Saroo extends React.Component {
   constructor() {
     super();
+
+    console.ignoredYellowBox = [
+      'Setting a timer',
+    ];
+
     this.state = {
       isReady: false,
     };

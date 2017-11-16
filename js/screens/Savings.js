@@ -1,28 +1,38 @@
 // Components
 import React from 'react';
 import Divider from '@components/shared/Divider';
-import { View, StatusBar, ScrollView } from 'react-native';
+import { StatusBar, ScrollView } from 'react-native';
 import { Container, Button, Text } from 'native-base';
-import * as Progress from 'react-native-progress';
-import data from '@/json/Savings.json';
+
+import SavingOverview from '@/components/savings/SavingOverview';
+
+import { db } from '@/firebaseApp';
 
 // Styles
 import styles from '@styles/sarooStyles';
 import savingsStyles from '@styles/savingsStyles';
 
 // Utilities
-import toMoney from '@/utilities/money';
+import snapshotToArray from '@/utilities/firebaseUtils';
 
 export default class Savings extends React.Component {
   constructor() {
     super();
-
     this.state = {
       savings: [],
     };
   }
 
+  async componentWillMount() {
+    db.ref('savings_groups').on('value', (snapshot) => {
+      this.setState({ savings: snapshotToArray(snapshot) });
+    });
+  }
+
+  renderSaving = saving => <SavingOverview key={saving.key} saving={saving} />
+
   render() {
+    const { savings } = this.state;
     return (
       <Container style={styles.container}>
         <StatusBar
@@ -33,24 +43,7 @@ export default class Savings extends React.Component {
         </Text>
         <Divider />
         <ScrollView showsVerticalScrollIndicator={false} style={savingsStyles.content}>
-          {Object.values(data).map(sv => (
-            <View key={sv.name}>
-              <Text style={sv.savingText}>
-                {sv.name}
-              </Text>
-              <Progress.Bar
-                color="rgb(92, 107, 192)"
-                progress={sv.current / sv.meta}
-                width={null}
-                height={15}
-                style={savingsStyles.progressBar}
-              />
-              <View style={savingsStyles.saving}>
-                <Text style={savingsStyles.progressStart}>{toMoney(sv.current, 'PEN')}</Text>
-                <Text style={savingsStyles.progressEnd}>{toMoney(sv.meta, 'PEN')}</Text>
-              </View>
-            </View>
-            ))}
+          {savings.map(this.renderSaving)}
         </ScrollView>
 
         <Button block light style={styles.button}>
@@ -59,6 +52,6 @@ export default class Savings extends React.Component {
           </Text>
         </Button>
       </Container>
-    )
+    );
   }
 }

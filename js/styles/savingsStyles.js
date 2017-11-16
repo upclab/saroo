@@ -17,23 +17,4 @@ export default StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 20,
   },
-
-  progressBar: {
-    marginTop: 10,
-  },
-
-  progressStart: {
-    flex: 1,
-    fontFamily: 'System',
-    color: 'black',
-    fontSize: 16,
-  },
-
-  progressEnd: {
-    flex: 1,
-    fontFamily: 'System',
-    color: 'black',
-    fontSize: 16,
-    textAlign: 'right',
-  },
 });
