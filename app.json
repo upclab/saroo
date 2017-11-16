@@ -1,5 +1,9 @@
 {
   "expo": {
-    "sdkVersion": "22.0.0"
+    "name": "Saroo",
+    "slug": "upclab-saroo",
+    "sdkVersion": "22.0.0",
+    "privacy": "unlisted",
+    "orientation": "portrait"
   }
 }
