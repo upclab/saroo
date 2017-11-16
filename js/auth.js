@@ -71,3 +71,7 @@ export const isSignedIn = () => new Promise((resolve, reject) => {
     })
     .catch(err => reject(err));
 });
+
+export async function signOut() {
+  await auth.signOut();
+}
