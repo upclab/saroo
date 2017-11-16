@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Familia",
+    "integrants": [
+        {
+            "name": "John",
+            "url-img": ""
+        },
+        {
+            "name": "Claudia",
+            "url-img": ""
+        },
+        {
+            "name": "Alexandra",
+            "url-img": ""
+        },
+        {
+            "name": "Percy",
+            "url-img": ""
+        }
+    ]
+  },
+  {
+    "name": "Co-workers",
+    "integrants": [
+        {
+            "name": "Ian",
+            "url-img": ""
+        },
+        {
+            "name": "Eduardo",
+            "url-img": ""
+        },
+        {
+            "name": "Hugo",
+            "url-img": ""
+        },
+        {
+            "name": "Raphael",
+            "url-img": ""
+        }
+    ]
+  }
+]

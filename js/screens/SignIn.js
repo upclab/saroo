@@ -3,13 +3,20 @@ import { Alert, Image, StatusBar } from 'react-native';
 import { Button, Container, Icon, Input, Item, Text } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
-import { signInWithFacebook, signInWithGoogle } from '@/auth';
+import { onSignIn, signInWithFacebook, signInWithGoogle } from '@/auth';
 import styles from '@styles/signin';
 import sarooStyles from '@styles/saroo';
 
 const SarooLogo = require('@assets/saroo-logo.png');
 
 export default class SignIn extends React.Component {
+  onLoginClick = () => {
+    const { navigation } = this.props;
+
+    onSignIn()
+      .then(() => navigation.navigate('SignedIn'));
+  }
+
   onFacebookClick = () => {
     const { navigation } = this.props;
 
@@ -49,6 +56,7 @@ export default class SignIn extends React.Component {
               <Button
                 style={styles.loginButton}
                 block
+                onPress={this.onLoginClick}
               >
                 <Text>Ingresar</Text>
               </Button>

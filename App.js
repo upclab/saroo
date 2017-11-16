@@ -1,6 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
-import App from './js/index';
+import App from './js/screens/Groups';
 
 import { firebaseApp } from './js/firebaseApp';
 
