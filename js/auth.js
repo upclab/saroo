@@ -1,17 +1,42 @@
+import Expo from 'expo';
 import { AsyncStorage } from 'react-native';
 
-import { firebaseApp, facebookAuthProvider } from '@/firebaseApp';
+import { auth, facebookAuthProvider, googleAuthProvider } from '@/firebaseApp';
 
 export const FACEBOOK_APP_ID = '1790249171273714';
+export const GOOGLE_IOS_CLIENT_ID = '928875904475-om9732sk1q44auj7tf67pfdgjmhec7jb.apps.googleusercontent.com';
+export const GOOGLE_ANDROID_CLIENT_ID = '928875904475-be61j3jbr6gdqm9nnhh0qqiejcm1bqd9.apps.googleusercontent.com';
+
 export const USER_KEY_NAME = 'auth-demo-key';
 
 export const onSignIn = () => AsyncStorage.setItem(USER_KEY_NAME, 'true');
+export const onSignOut = () => AsyncStorage.removeItem(USER_KEY_NAME);
 
-firebaseApp.auth().onAuthStateChanged((user) => {
+auth.onAuthStateChanged((user) => {
   if (user != null) {
-    console.log(user);
+    onSignIn();
+  } else {
+    onSignOut();
   }
 });
+
+export async function signInWithGoogle() {
+  const { type, accessToken } = await Expo.Google.logInAsync({
+    iosClientId: GOOGLE_IOS_CLIENT_ID,
+    androidClientId: GOOGLE_ANDROID_CLIENT_ID,
+    scopes: ['profile', 'email'],
+  });
+
+  if (type === 'success') {
+    const credential = googleAuthProvider.credential(null, accessToken);
+
+    await auth.signInWithCredential(credential)
+      .then(user => Promise.resolve(user))
+      .catch(error => Promise.reject(error));
+  } else {
+    Promise.reject(new Error('auth/expo-google-login-error'));
+  }
+}
 
 export async function signInWithFacebook() {
   const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
@@ -27,17 +52,13 @@ export async function signInWithFacebook() {
   if (type === 'success') {
     const credential = facebookAuthProvider.credential(token);
 
-    firebaseApp.auth().signInWithCredential(credential)
-      .then((user) => {
-        onSignIn();
-        return Promise.resolve(user);
-      })
+    await auth.signInWithCredential(credential)
+      .then(user => Promise.resolve(user))
       .catch(error => Promise.reject(error));
+  } else {
+    Promise.reject(new Error('auth/expo-facebook-login-error'));
   }
-  return Promise.reject(new Error('auth/expo-facebook-login-error'));
 }
-
-export const onSignOut = () => AsyncStorage.removeItem(USER_KEY_NAME);
 
 export const isSignedIn = () => new Promise((resolve, reject) => {
   AsyncStorage.getItem(USER_KEY_NAME)

@@ -3,7 +3,7 @@ import { Alert, Image, StatusBar } from 'react-native';
 import { Button, Container, Icon, Input, Item, Text } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
-import { signInWithFacebook } from '@/auth';
+import { signInWithFacebook, signInWithGoogle } from '@/auth';
 import styles from '@styles/signin';
 import sarooStyles from '@styles/saroo';
 
@@ -15,7 +15,15 @@ export default class SignIn extends React.Component {
 
     signInWithFacebook()
       .then(() => navigation.navigate('SignedIn'))
-      .catch(() => Alert.alert('No se pudo ingresar con Facebook!'));
+      .catch(() => Alert.alert('¡No se pudo conectar con Facebook!'));
+  }
+
+  onGoogleClick = () => {
+    const { navigation } = this.props;
+
+    signInWithGoogle()
+      .then(() => navigation.navigate('SignedIn'))
+      .catch(() => Alert.alert('¡No se pudo conectar con Google!'));
   }
 
   render = () => {
@@ -57,7 +65,12 @@ export default class SignIn extends React.Component {
               >
                 <Icon name="logo-facebook" style={styles.facebookButton} />
               </Button>
-              <Button rounded light style={styles.socialButton}>
+              <Button
+                rounded
+                light
+                style={styles.socialButton}
+                onPress={this.onGoogleClick}
+              >
                 <Icon name="logo-google" style={styles.googleButton} />
               </Button>
             </Col>
