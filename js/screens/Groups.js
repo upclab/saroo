@@ -1,22 +1,23 @@
 import React from 'react';
 import { Text, StatusBar, ScrollView } from 'react-native';
 import { Container, Button } from 'native-base';
-import styles from '@styles/groups';
-import containerStyles from '@styles/container';
-import savingsStyles from '@styles/savings';
+
+import styles from '@styles/sarooStyles';
+import groupsStyles from '@styles/groupsStyles';
+
 import Divider from '@components/shared/Divider';
 
 export default () => (
-  <Container style={containerStyles.main}>
+  <Container style={styles.container}>
     <StatusBar barStyle="light-content" />
-    <Text style={containerStyles.title}>Grupos</Text>
+    <Text style={styles.title}>Grupos</Text>
     <Divider />
-    <ScrollView showsVerticalScrollIndicator={false} style={savingsStyles.content}>
-      <Text style={savingsStyles.savingText}>Hola</Text>
+    <ScrollView showsVerticalScrollIndicator={false} style={groupsStyles.content}>
+      <Text style={groupsStyles.savingText}>Hola</Text>
     </ScrollView>
-    <Button block light style={containerStyles.button}>
-      <Text style={containerStyles.buttonText}>
-        NUEVO AHORRO
+    <Button block light style={styles.button}>
+      <Text style={styles.buttonText}>
+        Nuevo Grupo
       </Text>
     </Button>
   </Container>

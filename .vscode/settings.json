@@ -2,5 +2,6 @@
   "editor.rulers": [
     0,
     120
-  ]
+  ],
+  "files.eol": "\n"
 }
