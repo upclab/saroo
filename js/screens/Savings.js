@@ -1,4 +1,3 @@
-// Components
 import React from 'react';
 import Divider from '@components/shared/Divider';
 import { StatusBar, ScrollView } from 'react-native';
@@ -12,8 +11,8 @@ import { db } from '@/firebaseApp';
 import styles from '@styles/sarooStyles';
 import savingsStyles from '@styles/savingsStyles';
 
-// Utilities
-import snapshotToArray from '@/utilities/firebaseUtils';
+// Lib
+import { snapshotToArray } from '@/utilities/firebaseUtils';
 
 export default class Savings extends React.Component {
   constructor() {
@@ -23,7 +22,7 @@ export default class Savings extends React.Component {
     };
   }
 
-  async componentWillMount() {
+  componentDidMount() {
     db.ref('savings_groups').on('value', (snapshot) => {
       this.setState({ savings: snapshotToArray(snapshot) });
     });
@@ -33,6 +32,7 @@ export default class Savings extends React.Component {
 
   render() {
     const { savings } = this.state;
+
     return (
       <Container style={styles.container}>
         <StatusBar

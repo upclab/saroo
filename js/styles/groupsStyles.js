@@ -1,10 +1,14 @@
 import { StyleSheet } from 'react-native';
 
+import { PRIMARY_COLOR } from '@styles/variables';
+
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  title: {
+    marginTop: 20,
+    marginBottom: 20,
+    color: PRIMARY_COLOR,
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });

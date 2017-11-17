@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 
 export default function ({ saving }) {
   return (
-    <TouchableOpacity key={saving.name}>
+    <TouchableOpacity>
       <Text style={saving.savingText}>
         {saving.name}
       </Text>

@@ -1,7 +1,11 @@
+import Expo from 'expo';
+
+import { WHITE, PRIMARY_COLOR } from '@styles/variables';
+
 export default {
   container: {
     marginTop: Expo.Constants.statusBarHeight,
-    backgroundColor: 'white',
+    backgroundColor: WHITE,
     paddingLeft: 30,
     paddingRight: 30,
   },
@@ -16,7 +20,7 @@ export default {
   button: {
     marginTop: 20,
     marginBottom: 20,
-    backgroundColor: '#EB144C',
+    backgroundColor: PRIMARY_COLOR,
   },
 
   buttonText: {
