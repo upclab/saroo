@@ -9,16 +9,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
+  progressIndicators: {
+    marginTop: 5,
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+
   progressStart: {
     flex: 1,
-    fontFamily: 'System',
     color: 'black',
     fontSize: 16,
   },
 
   progressEnd: {
     flex: 1,
-    fontFamily: 'System',
     color: 'black',
     fontSize: 16,
     textAlign: 'right',
@@ -38,7 +42,7 @@ export default function ({ saving }) {
         height={15}
         style={styles.progressBar}
       />
-      <View style={styles.saving}>
+      <View style={styles.progressIndicators}>
         <Text style={styles.progressStart}>{toMoney(saving.current, 'PEN')}</Text>
         <Text style={styles.progressEnd}>{toMoney(saving.meta, 'PEN')}</Text>
       </View>
