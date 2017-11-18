@@ -27,7 +27,7 @@ export default class Groups extends React.Component {
     });
   }
 
-  renderGroup = group => <GroupOverview key={group.key} group={group} />
+  renderGroup = group => <GroupOverview key={group.key} wrapperStyles={groupsStyles.groupWrapper} group={group} />
 
   render() {
     const { groups } = this.state;

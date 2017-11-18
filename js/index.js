@@ -20,6 +20,7 @@ export default new TabNavigator(
   {
     initialRouteName: 'Overview',
     tabBarPosition: 'bottom',
+    swipeEnabled: false,
     tabBarComponent: (props) => {
       const { navigate } = props.navigation;
 
