@@ -1,16 +1,6 @@
 import { action, observable } from 'mobx';
 
-import { db } from '@/firebaseApp';
-import { snapshotToArray } from '@/utilities/firebaseUtils';
-
 class UserStore {
-  constructor() {
-    db.ref('users').once('value')
-      .then((snapshot) => {
-        this.users = snapshotToArray(snapshot);
-      });
-  }
-
   @observable users = [];
   @observable userKey = null;
 
@@ -18,7 +8,7 @@ class UserStore {
     this.userKey = userKey;
   }
 
-  @action removeUser() {
+  @action removeUserKey() {
     this.userKey = null;
   }
 }

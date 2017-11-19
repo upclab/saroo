@@ -50,10 +50,11 @@ export default class Groups extends React.Component {
       );
     }
     return (
-      <View>
+      <Container style={styles.container}>
+        <StatusBar barStyle="dark-content" />
         <Text style={styles.title}>Otros Grupos</Text>
         <Text>Cargando...</Text>
-      </View>
+      </Container>
     );
   }
 }

@@ -10,6 +10,12 @@ export function snapshotToArray(snapshot) {
   return returnArr;
 }
 
+export function snapshotToObject(snapshot) {
+  const returnObj = snapshot.val();
+  returnObj.key = snapshot.key;
+  return returnObj;
+}
+
 export function objectToArray(firebaseObject) {
   const returnArr = [];
 

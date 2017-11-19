@@ -23,7 +23,8 @@ export default class SignIn extends React.Component {
     const { email, password } = this.state;
 
     signInWithEmail(email, password)
-      .then(() => navigation.navigate('SignedIn'));
+      .then(() => navigation.navigate('SignedIn'))
+      .catch(() => Alert.alert('Datos incorrectos!'));
   }
 
   render() {
