@@ -1,7 +1,7 @@
 import React from 'react';
 import Divider from '@components/shared/Divider';
-import { StatusBar, ScrollView } from 'react-native';
-import { Container, Button, Text } from 'native-base';
+import { StatusBar, ScrollView, Text } from 'react-native';
+import { Container, Button } from 'native-base';
 
 import SavingOverview from '@/components/savings/SavingOverview';
 

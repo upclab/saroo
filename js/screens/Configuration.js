@@ -1,19 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Button, Text } from 'native-base';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import styles from '@styles/sarooStyles';
+import utilsStyles from '@styles/utilsStyles';
 
 export default function () {
   return (
-    <View style={styles.container}>
-      <Text>Configuraciones!</Text>
+    <View style={[styles.container, utilsStyles.flexCentered]}>
+      <Button danger style={utilsStyles.centerAligned}>
+        <Text style={styles.buttonText} uppercase={false}>
+          Cerrar Sesión
+        </Text>
+      </Button>
     </View>
   );
 }

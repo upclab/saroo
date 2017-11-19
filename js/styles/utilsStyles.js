@@ -14,4 +14,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  centerAligned: {
+    alignSelf: 'center',
+  },
 });

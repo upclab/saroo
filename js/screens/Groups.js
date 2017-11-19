@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, StatusBar, ScrollView, View } from 'react-native';
-import { Container, Button } from 'native-base';
+import { StatusBar, ScrollView, Text, View } from 'react-native';
+import { Button, Container } from 'native-base';
 
 import GroupOverview from '@components/groups/GroupOverview';
 
