@@ -12,14 +12,14 @@ class UserStore {
   }
 
   @observable users = [];
-  @observable userKey = 'usr0010';
+  @observable userKey = null;
 
-  @action setUser(user) {
-    this.user = user;
+  @action setUserKey(userKey) {
+    this.userKey = userKey;
   }
 
   @action removeUser() {
-    this.user = null;
+    this.userKey = null;
   }
 }
 

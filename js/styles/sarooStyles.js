@@ -29,4 +29,13 @@ export default {
     fontWeight: 'bold',
     color: WHITE,
   },
+
+  input: {
+    color: PRIMARY_COLOR,
+    borderColor: PRIMARY_COLOR,
+  },
+
+  icon: {
+    color: PRIMARY_COLOR,
+  },
 };

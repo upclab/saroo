@@ -7,7 +7,7 @@ import { Provider } from 'mobx-react/native';
 import GroupStore from '@mobx/groupStore';
 import UserStore from '@mobx/userStore';
 
-import App from '@screens/SignIn';
+import App from '@/index';
 
 const Roboto = require('native-base/Fonts/Roboto.ttf');
 const RobotoMedium = require('native-base/Fonts/Roboto_medium.ttf');

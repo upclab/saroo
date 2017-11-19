@@ -35,7 +35,7 @@ export default class Savings extends React.Component {
 
     return (
       <Container style={styles.container}>
-        <StatusBar barStyle="light-content" />
+        <StatusBar barStyle="dark-content" />
         <Text style={styles.title}>Ahorros</Text>
         <Divider />
 
