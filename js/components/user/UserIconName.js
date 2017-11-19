@@ -9,6 +9,9 @@ const CIRCLE_RADIUS = 24;
 const CIRCLE_DIAMETER = CIRCLE_RADIUS * 2;
 
 const styles = StyleSheet.create({
+  wrapper: {
+    height: 80,
+  },
   nameWrapper: {
     marginTop: 16,
   },
@@ -34,7 +37,7 @@ export default class GroupOverview extends React.Component {
     const { user } = this.props;
 
     return (
-      <View>
+      <View style={styles.wrapper}>
         <View style={[styles.circle, utilsStyles.flexCentered]}>
           <Icon style={styles.icon} name="md-person" />
         </View>

@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 import { db } from '@/firebaseApp';
 import { snapshotToArray } from '@/utilities/firebaseUtils';
@@ -13,8 +13,13 @@ class GroupStore {
   @observable groups = [];
   @observable selectedGroupKey = 'gr002';
 
-  @action updateSelectedGroup(selectedGroupKey) {
+  @action updateSelectedGroupKey(selectedGroupKey) {
     this.selectedGroupKey = selectedGroupKey;
+  }
+
+  @computed get selectedGroup() {
+    const { selectedGroupKey } = this;
+    return this.groups.find(group => group.key === selectedGroupKey);
   }
 }
 

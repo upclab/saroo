@@ -13,17 +13,20 @@ import { inject, observer } from 'mobx-react';
 import { objectToArray } from '@/utilities/firebaseUtils';
 
 const styles = StyleSheet.create({
+  wrapper: {
+    height: 136,
+  },
   groupText: {
     marginBottom: 26,
     color: PRIMARY_COLOR,
-    fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 18,
   },
   icon: {
     color: PRIMARY_COLOR,
   },
 });
 
+@inject('GroupStore')
 @inject('UserStore')
 @observer
 export default class GroupOverview extends React.Component {
@@ -33,28 +36,34 @@ export default class GroupOverview extends React.Component {
       .filter(participant => participant.key !== UserStore.userKey);
   }
 
-  renderUser = (user) => {
-    const { UserStore } = this.props;
-    if (UserStore.userKey === user.key) {
-      return null;
-    }
-    return <UserIconName key={user.key} user={user} />;
+  isSelected() {
+    const { GroupStore, group } = this.props;
+    return GroupStore.selectedGroupKey === group.key;
   }
+
+  rederAction() {
+    if (this.isSelected()) {
+      return <Icon style={styles.icon} name="md-create" />;
+    }
+    return <Icon style={styles.icon} name="md-eye" />;
+  }
+
+  renderUser = user => <UserIconName key={user.key} user={user} />;
 
   render() {
     const { group, wrapperStyles } = this.props;
 
     return (
-      <View style={wrapperStyles}>
+      <View style={[styles.wrapper, wrapperStyles]}>
 
         <View style={utilsStyles.level}>
           <Text style={styles.groupText}>
             {group.name}
           </Text>
-          <Icon style={styles.icon} name="md-eye" />
+          { this.rederAction() }
         </View>
 
-        <View style={utilsStyles.flex}>
+        <View>
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
