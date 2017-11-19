@@ -2,6 +2,7 @@ import React from 'react';
 import { Alert, Image, KeyboardAvoidingView, StatusBar } from 'react-native';
 import { Button, Container, Icon, Input, Item, Text } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import styles from '@styles/sarooStyles';
 import signinstyles from '@styles/signinStyles';
@@ -16,20 +17,27 @@ export default class SignIn extends React.Component {
   state = {
     email: '',
     password: '',
+    loading: false,
   }
 
   onLoginClick = () => {
     const { navigation } = this.props;
     const { email, password } = this.state;
 
+    this.setState({ loading: true });
+
     signInWithEmail(email, password)
       .then(() => navigation.navigate('SignedIn'))
-      .catch(() => Alert.alert('Datos incorrectos!'));
+      .catch(() => Alert.alert('Datos incorrectos!'))
+      .then(() => this.setState({ loading: false }));
   }
 
   render() {
+    const { loading } = this.state;
+
     return (
       <KeyboardAvoidingView behavior="padding" style={utilsStyles.flex}>
+        <Spinner visible={loading} />
         <Container style={styles.container}>
           <StatusBar barStyle="dark-content" />
           <Grid>
@@ -48,6 +56,8 @@ export default class SignIn extends React.Component {
                     underlineColorAndroid={PRIMARY_COLOR}
                     style={styles.input}
                     onChangeText={email => this.setState({ email })}
+                    ref={(input) => { this.emailInput = input; }}
+                    onSubmitEditing={() => this.passwordInput._root.focus()}
                   />
                 </Item>
                 <Item style={signinstyles.field}>
@@ -59,6 +69,8 @@ export default class SignIn extends React.Component {
                     underlineColorAndroid={PRIMARY_COLOR}
                     style={styles.input}
                     onChangeText={password => this.setState({ password })}
+                    ref={(input) => { this.passwordInput = input; }}
+                    onSubmitEditing={() => this.passwordInput._root.blur()}
                   />
                 </Item>
                 <Button
