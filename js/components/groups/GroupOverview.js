@@ -42,10 +42,18 @@ export default class GroupOverview extends React.Component {
   }
 
   rederAction() {
+    const { group, GroupStore } = this.props;
+
     if (this.isSelected()) {
       return <Icon style={styles.icon} name="md-create" />;
     }
-    return <Icon style={styles.icon} name="md-eye" />;
+    return (
+      <Icon
+        style={styles.icon}
+        name="md-eye"
+        onPress={() => GroupStore.updateSelectedGroupKey(group.key)}
+      />
+    );
   }
 
   renderUser = user => <UserIconName key={user.key} user={user} />;
