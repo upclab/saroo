@@ -1,10 +1,26 @@
 import Expo from 'expo';
 import React from 'react';
+
+import { Provider } from 'mobx-react/native';
+
+// Stores
+import GroupStore from '@mobx/groupStore';
+import UserStore from '@mobx/userStore';
+
 import App from './js/index';
 
 const Roboto = require('native-base/Fonts/Roboto.ttf');
 const RobotoMedium = require('native-base/Fonts/Roboto_medium.ttf');
 const Ionicons = require('@expo/vector-icons/fonts/Ionicons.ttf');
+
+const Root = (
+  <Provider
+    UserStore={UserStore}
+    GroupStore={GroupStore}
+  >
+    <App />
+  </Provider>
+);
 
 export default class Saroo extends React.Component {
   constructor() {
@@ -32,6 +48,6 @@ export default class Saroo extends React.Component {
     if (!this.state.isReady) {
       return <Expo.AppLoading />;
     }
-    return <App />;
+    return Root;
   }
 }

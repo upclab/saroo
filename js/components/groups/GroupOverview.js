@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'native-base';
 
 import UserIconName from '@components/user/UserIconName';
@@ -9,6 +9,7 @@ import utilsStyles from '@styles/utilsStyles';
 import { PRIMARY_COLOR, DEFAULT_PADDING } from '@styles/variables';
 
 // Lib
+import { inject, observer } from 'mobx-react';
 import { objectToArray } from '@/utilities/firebaseUtils';
 
 const styles = StyleSheet.create({
@@ -23,31 +24,42 @@ const styles = StyleSheet.create({
   },
 });
 
+@inject('UserStore')
+@observer
 export default class GroupOverview extends React.Component {
-  users() {
-    const { participants } = this.props.group;
-    return objectToArray(participants);
+  otherParticipants() {
+    const { group, UserStore } = this.props;
+    return objectToArray(group.participants)
+      .filter(participant => participant.key !== UserStore.userKey);
   }
 
-  renderUser = user =>
-    <UserIconName key={user.key} user={user} />
+  renderUser = (user) => {
+    const { UserStore } = this.props;
+    if (UserStore.userKey === user.key) {
+      return null;
+    }
+    return <UserIconName key={user.key} user={user} />;
+  }
 
   render() {
     const { group, wrapperStyles } = this.props;
 
     return (
       <View style={wrapperStyles}>
+
         <View style={utilsStyles.level}>
           <Text style={styles.groupText}>
             {group.name}
           </Text>
-          <Icon style={styles.icon} name="md-create" />
+          <Icon style={styles.icon} name="md-eye" />
         </View>
-        <View style={utilsStyles.ss}>
+
+        <View style={utilsStyles.flex}>
           <FlatList
             horizontal
-            data={this.users()}
-            ItemSeparatorComponent={() => <View style={{ height: 20, width: 20 }} />}
+            showsHorizontalScrollIndicator={false}
+            data={this.otherParticipants()}
+            ItemSeparatorComponent={() => <View style={{ width: DEFAULT_PADDING }} />}
             renderItem={({ item }) => this.renderUser(item)}
           />
         </View>

@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import * as Progress from 'react-native-progress';
+import { Bar } from 'react-native-progress';
 
 import toMoney from '@/utilities/money';
+import { PRIMARY_COLOR } from '../../styles/variables';
 
 const styles = StyleSheet.create({
   progressBar: {
@@ -35,8 +36,8 @@ export default function ({ saving }) {
       <Text style={saving.savingText}>
         {saving.name}
       </Text>
-      <Progress.Bar
-        color="rgb(92, 107, 192)"
+      <Bar
+        color={PRIMARY_COLOR}
         progress={saving.current / saving.meta}
         width={null}
         height={15}

@@ -11,10 +11,12 @@ export default {
   },
 
   title: {
-    marginTop: 50,
-    color: 'black',
-    fontSize: 27,
-    fontWeight: '800',
+    marginTop: 20,
+    marginBottom: 10,
+    color: PRIMARY_COLOR,
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 
   button: {
@@ -24,7 +26,7 @@ export default {
   },
 
   buttonText: {
-    fontWeight: '600',
-    color: 'white',
+    fontWeight: 'bold',
+    color: WHITE,
   },
 };

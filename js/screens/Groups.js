@@ -4,41 +4,37 @@ import { Container, Button } from 'native-base';
 
 import GroupOverview from '@components/groups/GroupOverview';
 
-import { db } from '@/firebaseApp';
-
 // Styles
 import styles from '@styles/sarooStyles';
 import groupsStyles from '@styles/groupsStyles';
 
 // Lib
-import { snapshotToArray } from '@/utilities/firebaseUtils';
+import { inject, observer } from 'mobx-react';
 
+@inject('GroupStore')
+@observer
 export default class Groups extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      groups: [],
-    };
-  }
+  renderGroup = (group) => {
+    const { GroupStore } = this.props;
 
-  componentDidMount() {
-    db.ref('groups').on('value', (snapshot) => {
-      this.setState({ groups: snapshotToArray(snapshot) });
-    });
+    if (group.key === GroupStore.selectedGroupKey) {
+      return null;
+    }
+    return (
+      <GroupOverview key={group.key} wrapperStyles={groupsStyles.groupWrapper} group={group} />
+    );
   }
-
-  renderGroup = group => <GroupOverview key={group.key} wrapperStyles={groupsStyles.groupWrapper} group={group} />
 
   render() {
-    const { groups } = this.state;
+    const { GroupStore } = this.props;
 
     return (
       <Container style={styles.container}>
         <StatusBar barStyle="light-content" />
 
-        <Text style={groupsStyles.title}>Grupos</Text>
+        <Text style={styles.title}>Otros Grupos</Text>
         <ScrollView showsVerticalScrollIndicator={false} style={groupsStyles.content}>
-          {groups.map(this.renderGroup)}
+          {GroupStore.groups.map(this.renderGroup)}
         </ScrollView>
 
         <Button block light style={styles.button}>

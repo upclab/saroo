@@ -35,13 +35,10 @@ export default class Savings extends React.Component {
 
     return (
       <Container style={styles.container}>
-        <StatusBar
-          barStyle="light-content"
-        />
-        <Text style={styles.title}>
-          Ahorros
-        </Text>
+        <StatusBar barStyle="light-content" />
+        <Text style={styles.title}>Ahorros</Text>
         <Divider />
+
         <ScrollView showsVerticalScrollIndicator={false} style={savingsStyles.content}>
           {savings.map(this.renderSaving)}
         </ScrollView>

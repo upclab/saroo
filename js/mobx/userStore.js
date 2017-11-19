@@ -1,18 +1,27 @@
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
 
-class ObservableUserStore {
-  @observable
-  user = {}
+import { db } from '@/firebaseApp';
+import { snapshotToArray } from '@/utilities/firebaseUtils';
 
-  setUser(user) {
+class UserStore {
+  constructor() {
+    db.ref('users').once('value')
+      .then((snapshot) => {
+        this.users = snapshotToArray(snapshot);
+      });
+  }
+
+  @observable users = [];
+  @observable userKey = 'usr0010';
+
+  @action setUser(user) {
     this.user = user;
   }
 
-  removeUser() {
+  @action removeUser() {
     this.user = null;
   }
 }
 
-const observableUserStore = new ObservableUserStore();
-
-export default observableUserStore;
+const userStore = new UserStore();
+export default userStore;

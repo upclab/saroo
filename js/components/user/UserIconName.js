@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   name: {
     color: PRIMARY_COLOR,
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 12,
     textAlign: 'center',
   },
   icon: {

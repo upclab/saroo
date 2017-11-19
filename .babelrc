@@ -6,9 +6,10 @@
       "root": ["."],
       "alias": {
         "@": "./js",
+        "@assets":  "./assets",
         "@components": "./js/components",
-        "@styles":  "./js/styles",
-        "@assets":  "./assets"
+        "@mobx":  "./js/mobx",
+        "@styles":  "./js/styles"
       }
     }]
   ],
