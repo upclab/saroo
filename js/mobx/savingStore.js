@@ -3,7 +3,7 @@ import { action, observable } from 'mobx';
 class SavingStore {
   @observable savings = [];
 
-  @action updataSavings(savings) {
+  @action updateSavings(savings) {
     this.savings = savings;
   }
 }

@@ -9,8 +9,10 @@ import utilsStyles from '@styles/utilsStyles';
 import { PRIMARY_COLOR, DEFAULT_PADDING } from '@styles/variables';
 
 // Lib
-import { inject, observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react/native';
 import { objectToArray } from '@/utilities/firebaseUtils';
+
+import MainStore from '@mobx/mainStore';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -41,9 +43,15 @@ export default class GroupOverview extends React.Component {
     return GroupStore.selectedGroupKey === group.key;
   }
 
-  rederAction() {
+  async selectGroup() {
     const { group, GroupStore } = this.props;
 
+    MainStore.showLoader();
+    await GroupStore.updateSelectedGroupKey(group.key, { fetchOnce: true });
+    MainStore.hideLoader();
+  }
+
+  rederAction() {
     if (this.isSelected()) {
       return <Icon style={styles.icon} name="md-create" />;
     }
@@ -51,7 +59,7 @@ export default class GroupOverview extends React.Component {
       <Icon
         style={styles.icon}
         name="md-eye"
-        onPress={() => GroupStore.updateSelectedGroupKey(group.key)}
+        onPress={() => { this.selectGroup(); }}
       />
     );
   }

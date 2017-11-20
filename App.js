@@ -7,6 +7,7 @@ import { Provider } from 'mobx-react/native';
 import GroupStore from '@mobx/groupStore';
 import UserStore from '@mobx/userStore';
 import SavingStore from '@mobx/savingStore';
+import MainStore from '@mobx/mainStore';
 
 import App from '@/index';
 
@@ -19,6 +20,7 @@ const Root = (
     UserStore={UserStore}
     GroupStore={GroupStore}
     SavingStore={SavingStore}
+    MainStore={MainStore}
   >
     <App />
   </Provider>

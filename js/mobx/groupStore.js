@@ -30,7 +30,7 @@ class GroupStore {
     this.groups = await Promise.all(groups);
   }
 
-  @action async updateSelectedGroupKey(selectedGroupKey) {
+  @action async updateSelectedGroupKey(selectedGroupKey, { fetchOnce } = {}) {
     // Unbind the old references
     if (this.selectedGroupKey) {
       savingsRef(this.selectedGroupKey).off();
@@ -39,8 +39,13 @@ class GroupStore {
     // Bind the new References
     this.selectedGroupKey = selectedGroupKey;
 
+    if (fetchOnce) {
+      const quickSnapshot = await savingsRef(this.selectedGroupKey).once('value');
+      SavingStore.updateSavings(snapshotToArray(quickSnapshot));
+    }
+
     savingsRef(this.selectedGroupKey).on('value', (snapshot) => {
-      SavingStore.updataSavings(snapshotToArray(snapshot));
+      SavingStore.updateSavings(snapshotToArray(snapshot));
     });
   }
 

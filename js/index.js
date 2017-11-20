@@ -22,6 +22,7 @@ export default class App extends React.Component {
   render() {
     const { signedIn } = this.state;
     const Layout = createRootNavigator(signedIn);
+
     return <Layout />;
   }
 }

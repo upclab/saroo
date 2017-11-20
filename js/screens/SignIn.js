@@ -4,40 +4,43 @@ import { Button, Container, Icon, Input, Item, Text } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Spinner from 'react-native-loading-spinner-overlay';
 
+import { inject, observer } from 'mobx-react/native';
+
 import styles from '@styles/sarooStyles';
 import signinstyles from '@styles/signinStyles';
 import utilsStyles from '@styles/utilsStyles';
 
 import { signInWithEmail } from '@/auth';
-import { PRIMARY_COLOR } from '../styles/variables';
+import { PRIMARY_COLOR } from '@styles/variables';
 
 const SarooLogo = require('@assets/saroo-logo.png');
 
+@inject('MainStore')
+@observer
 export default class SignIn extends React.Component {
   state = {
     email: '',
     password: '',
-    loading: false,
   }
 
   onLoginClick = () => {
-    const { navigation } = this.props;
+    const { navigation, MainStore } = this.props;
     const { email, password } = this.state;
 
-    this.setState({ loading: true });
+    MainStore.showLoader();
 
     signInWithEmail(email, password)
       .then(() => navigation.navigate('SignedIn'))
       .catch(() => Alert.alert('Datos incorrectos!'))
-      .then(() => this.setState({ loading: false }));
+      .then(() => MainStore.hideLoader());
   }
 
   render() {
-    const { loading } = this.state;
+    const { MainStore } = this.props;
 
     return (
       <KeyboardAvoidingView behavior="padding" style={utilsStyles.flex}>
-        <Spinner visible={loading} />
+        <Spinner visible={MainStore.isLoading} />
         <Container style={styles.container}>
           <StatusBar barStyle="dark-content" />
           <Grid>
