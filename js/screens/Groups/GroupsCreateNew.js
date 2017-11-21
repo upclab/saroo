@@ -2,13 +2,15 @@ import React from 'react';
 import { StatusBar, View } from 'react-native';
 import { Container, Icon, Text } from 'native-base';
 
+import { NavigationActions } from 'react-navigation'
+
 // Styles
 import styles from '@styles/sarooStyles';
 
 export default class GroupsCreateNew extends React.Component {
   onBack() {
     const { navigation } = this.props;
-    navigation.navigate('GroupsIndex');
+    navigation.dispatch(NavigationActions.back());
   }
 
   render() {
@@ -18,7 +20,7 @@ export default class GroupsCreateNew extends React.Component {
 
         <View style={styles.backContainer}>
           <Icon
-            style={styles.icon}
+            style={styles.touchableIcon}
             name="ios-arrow-back"
             onPress={() => { this.onBack(); }}
           />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert, StatusBar, StyleSheet, View } from 'react-native';
 import { Button, Container, Icon, Input, Item, Text } from 'native-base';
+import { NavigationActions } from 'react-navigation'
 
 // Styles
 import styles from '@styles/sarooStyles';
@@ -18,7 +19,7 @@ export default class SavingsCreateNew extends React.Component {
 
   onBack() {
     const { navigation } = this.props;
-    navigation.navigate('SavingsIndex');
+    navigation.dispatch(NavigationActions.back());
   }
 
   onCreateSaving() {
@@ -31,7 +32,7 @@ export default class SavingsCreateNew extends React.Component {
       Alert.alert('Porfavor ingresa una meta para el nuevo fondo!');
     } else {
       addSaving({ name, meta, initialAmount: amount });
-      navigation.navigate('SavingsIndex');
+      navigation.dispatch(NavigationActions.back());
     }
   }
 
