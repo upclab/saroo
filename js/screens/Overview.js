@@ -1,19 +1,24 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+import OverviewIndex from '@screens/Overview/OverviewIndex';
+import CreateNewIncome from '@screens/Overview/OverviewCreateIncome';
+import CreateNewOutlay from '@screens/Overview/OverviewCreateOutlay';
+
+export default StackNavigator(
+  {
+    OverviewCreateIncome: {
+      screen: OverviewIndex,
+    },
+    CreateNewIncome: {
+      screen: CreateNewIncome,
+    },
+    CreateNewOutlay: {
+      screen: CreateNewOutlay,
+    },
   },
-});
-
-export default function () {
-  return (
-    <View style={styles.container}>
-      <Text>Bienvienido!</Text>
-    </View>
-  );
-}
+  {
+    navigationOptions: {
+      header: null,
+    },
+  },
+);
