@@ -5,6 +5,7 @@ import { Icon } from 'native-base';
 import UserIconName from '@components/user/UserIconName';
 
 // Styles
+import styles from '@styles/sarooStyles';
 import utilsStyles from '@styles/utilsStyles';
 import { PRIMARY_COLOR, DEFAULT_PADDING } from '@styles/variables';
 
@@ -13,20 +14,6 @@ import { inject, observer } from 'mobx-react/native';
 import { objectToArray } from '@/utilities/firebaseUtils';
 
 import MainStore from '@mobx/mainStore';
-
-const styles = StyleSheet.create({
-  wrapper: {
-    height: 136,
-  },
-  groupText: {
-    marginBottom: 26,
-    color: PRIMARY_COLOR,
-    fontSize: 18,
-  },
-  icon: {
-    color: PRIMARY_COLOR,
-  },
-});
 
 @inject('GroupStore')
 @inject('UserStore')
@@ -53,11 +40,11 @@ export default class GroupOverview extends React.Component {
 
   rederAction() {
     if (this.isSelected()) {
-      return <Icon style={styles.icon} name="md-create" />;
+      return <Icon style={styles.touchableIcon} name="md-create" />;
     }
     return (
       <Icon
-        style={styles.icon}
+        style={styles.touchableIcon}
         name="md-eye"
         onPress={() => { this.selectGroup(); }}
       />
@@ -70,10 +57,10 @@ export default class GroupOverview extends React.Component {
     const { group, wrapperStyles } = this.props;
 
     return (
-      <View style={[styles.wrapper, wrapperStyles]}>
+      <View style={[screenStyles.wrapper, wrapperStyles]}>
 
         <View style={utilsStyles.level}>
-          <Text style={styles.groupText}>
+          <Text style={screenStyles.groupText}>
             {group.name}
           </Text>
           { this.rederAction() }
@@ -92,3 +79,14 @@ export default class GroupOverview extends React.Component {
     );
   }
 }
+
+const screenStyles = StyleSheet.create({
+  wrapper: {
+    height: 136,
+  },
+  groupText: {
+    marginBottom: 26,
+    color: PRIMARY_COLOR,
+    fontSize: 18,
+  },
+});

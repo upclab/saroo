@@ -20,6 +20,7 @@ module.exports = {
     "react/jsx-filename-extension": [0],
     "import/no-extraneous-dependencies": ["off"],
     "react/prefer-stateless-function": [0],
+    "no-use-before-define": [0],
     "no-underscore-dangle": ["error", { "allow": ["_root"] }],
     "no-console": process.env.NODE_ENV === 'production' ? 2 : 0
   }

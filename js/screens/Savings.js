@@ -1,38 +1,20 @@
-import React from 'react';
-import { StatusBar, ScrollView, Text } from 'react-native';
-import { Container, Button } from 'native-base';
+import { StackNavigator } from 'react-navigation';
 
-import { inject, observer } from 'mobx-react/native';
+import SavingsIndex from '@screens/Savings/SavingsIndex';
+import CreateNew from '@screens/Savings/SavingsCreateNew';
 
-import SavingOverview from '@/components/savings/SavingOverview';
-
-// Styles
-import styles from '@styles/sarooStyles';
-import savingsStyles from '@styles/savingsStyles';
-
-@inject('SavingStore')
-@observer
-export default class Savings extends React.Component {
-  renderSaving = saving => <SavingOverview key={saving.key} saving={saving} />
-
-  render() {
-    const { SavingStore } = this.props;
-
-    return (
-      <Container style={styles.container}>
-        <StatusBar barStyle="dark-content" />
-        <Text style={styles.title}>Ahorros</Text>
-
-        <ScrollView showsVerticalScrollIndicator={false} style={savingsStyles.content}>
-          {SavingStore.savings.map(this.renderSaving)}
-        </ScrollView>
-
-        <Button block light style={styles.button}>
-          <Text style={styles.buttonText}>
-            Nuevo ahorro
-          </Text>
-        </Button>
-      </Container>
-    );
-  }
-}
+export default StackNavigator(
+  {
+    SavingsIndex: {
+      screen: SavingsIndex,
+    },
+    CreateNew: {
+      screen: CreateNew,
+    },
+  },
+  {
+    navigationOptions: {
+      header: null,
+    },
+  },
+);

@@ -3,11 +3,31 @@ import Expo from 'expo';
 import { WHITE, PRIMARY_COLOR } from '@styles/variables';
 
 export default {
+  fluidContainer: {
+    marginTop: Expo.Constants.statusBarHeight,
+    backgroundColor: WHITE,
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+
   container: {
     marginTop: Expo.Constants.statusBarHeight,
     backgroundColor: WHITE,
     paddingLeft: 30,
     paddingRight: 30,
+  },
+
+  backContainer: {
+    paddingTop: 14,
+    paddingLeft: 10,
+    paddingBottom: 14,
+  },
+
+  slimTitle: {
+    color: PRIMARY_COLOR,
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 
   title: {
@@ -37,5 +57,15 @@ export default {
 
   icon: {
     color: PRIMARY_COLOR,
+  },
+
+  touchableIcon: {
+    color: PRIMARY_COLOR,
+    padding: 10,
+  },
+
+  formLabel: {
+    color: PRIMARY_COLOR,
+    fontWeight: 'bold',
   },
 };
