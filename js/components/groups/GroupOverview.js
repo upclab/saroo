@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'native-base';
 
 import UserIconName from '@components/user/UserIconName';
@@ -14,6 +14,10 @@ import { inject, observer } from 'mobx-react/native';
 import { objectToArray } from '@/utilities/firebaseUtils';
 
 import MainStore from '@mobx/mainStore';
+
+function onEditGroup() {
+  Alert.alert('No estás autorizado para editar un grupo!');
+}
 
 @inject('GroupStore')
 @inject('UserStore')
@@ -40,7 +44,13 @@ export default class GroupOverview extends React.Component {
 
   rederAction() {
     if (this.isSelected()) {
-      return <Icon style={styles.touchableIcon} name="md-create" />;
+      return (
+        <Icon
+          style={styles.touchableIcon}
+          name="md-create"
+          onPress={() => { onEditGroup(); }}
+        />
+      );
     }
     return (
       <Icon

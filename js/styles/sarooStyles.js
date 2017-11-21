@@ -61,7 +61,7 @@ export default {
 
   touchableIcon: {
     color: PRIMARY_COLOR,
-    padding: 10,
+    padding: 15,
   },
 
   formLabel: {

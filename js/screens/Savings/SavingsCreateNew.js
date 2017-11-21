@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, StatusBar, StyleSheet, View } from 'react-native';
 import { Button, Container, Icon, Input, Item, Text } from 'native-base';
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation';
 
 // Styles
 import styles from '@styles/sarooStyles';
