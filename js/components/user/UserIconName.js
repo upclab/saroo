@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class GroupOverview extends React.Component {
+export default class UserIconName extends React.Component {
   render() {
     const { user } = this.props;
 
