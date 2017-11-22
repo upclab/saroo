@@ -47,12 +47,22 @@ export default class OverviewIndex extends Component {
     this.setState({ isDateTimePickerVisible: true });
   }
 
+  onCreateIncome() {
+    const { navigation } = this.props;
+    navigation.navigate('CreateNewIncome');
+  }
+
+  onCreateOutlay() {
+    const { navigation } = this.props;
+    navigation.navigate('CreateNewOutlay');
+  }
+
   hideDateTimePicker() {
     this.setState({ isDateTimePickerVisible: false });
   }
 
   handleDatePicked(date) {
-    Alert.alert(date);
+    Alert.alert(date.getTime().toString());
     this.hideDateTimePicker();
   }
 
@@ -111,7 +121,7 @@ export default class OverviewIndex extends Component {
               <Button
                 style={styles.button}
                 block
-                onPress={() => { this.onLoginClick(); }}
+                onPress={() => { this.onCreateIncome(); }}
               >
                 <Text style={styles.buttonText} uppercase={false}>Nuevo Ingreso</Text>
               </Button>
@@ -119,7 +129,7 @@ export default class OverviewIndex extends Component {
               <Button
                 style={styles.button}
                 block
-                onPress={() => { this.onLoginClick(); }}
+                onPress={() => { this.onCreateOutlay(); }}
               >
                 <Text style={styles.buttonText} uppercase={false}>Nuevo Gasto</Text>
               </Button>
