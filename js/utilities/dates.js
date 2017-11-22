@@ -13,3 +13,8 @@ export function toDayAndMonths(timestamp) {
   date = parse(Number(timestamp));
   return format(date, 'DD [de] MMMM');
 }
+
+export function toMonthAndYear(timestamp) {
+  const date = parse(Number(timestamp));
+  return format(date, 'MMMM - YYYY');
+}

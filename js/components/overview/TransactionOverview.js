@@ -2,6 +2,8 @@ import React from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'native-base';
 
+import { inject, observer } from 'mobx-react/native';
+
 import UserAvatar from '@components/user/UserAvatar';
 
 import {
@@ -20,9 +22,11 @@ function onEdit() {
   Alert.alert('No tienes permisos para editar esta transacción!');
 }
 
+@inject('SavingStore')
+@observer
 export default class TransactionOverview extends React.Component {
   render() {
-    const { transaction } = this.props;
+    const { transaction, SavingStore } = this.props;
 
     return (
       <View style={componentStyles.wrapper}>
@@ -45,7 +49,7 @@ export default class TransactionOverview extends React.Component {
                   {transaction.name}
                 </Text>
                 <Text style={componentStyles.saving}>
-                  {transaction.savingKey}
+                  { SavingStore.getSavingName(transaction.savingKey) }
                 </Text>
               </View>
             </View>
@@ -86,11 +90,13 @@ const componentStyles = StyleSheet.create({
 
   name: {
     color: PRIMARY_COLOR,
+    fontSize: 12,
     fontWeight: 'bold',
   },
 
   saving: {
     color: PRIMARY_COLOR,
+    fontSize: 12,
   },
 
   amountContainer: {
@@ -100,7 +106,7 @@ const componentStyles = StyleSheet.create({
 
   amount: {
     color: PRIMARY_COLOR,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });

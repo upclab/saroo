@@ -19,7 +19,22 @@ class SavingStore {
   @action updateSavings(savings) {
     this.savings = savings;
   }
+
+  @action getSaving(savingKey) {
+    return this.savings.find(s => s.key === savingKey);
+  }
+
+  @action getSavingName(savingKey) {
+    if (!savingKey) {
+      return (null);
+    }
+    const saving = this.getSaving(savingKey);
+    return saving ? saving.name : (null);
+  }
 }
 
 const savingStore = new SavingStore();
+/* eslint-disable no-unused-expressions */
+savingStore.savings;
+
 export default savingStore;

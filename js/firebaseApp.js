@@ -13,3 +13,4 @@ export const usersRef = db.ref('users');
 export const groupsRef = db.ref('groups');
 export const groupListRef = userKey => db.ref('users_groups').child(userKey);
 export const savingsRef = groupKey => db.ref('savings_groups').child(groupKey);
+export const transactionsRef = groupKey => db.ref('transactions_groups').child(groupKey);

@@ -1,4 +1,4 @@
-import { Alert, AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 import { auth, groupListRef } from '@/firebaseApp';
 

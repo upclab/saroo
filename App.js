@@ -8,6 +8,7 @@ import GroupStore from '@mobx/groupStore';
 import UserStore from '@mobx/userStore';
 import SavingStore from '@mobx/savingStore';
 import MainStore from '@mobx/mainStore';
+import TransactionStore from '@mobx/transactionStore';
 
 import App from '@/index';
 
@@ -21,6 +22,7 @@ const Root = (
     GroupStore={GroupStore}
     SavingStore={SavingStore}
     MainStore={MainStore}
+    TransactionStore={TransactionStore}
   >
     <App />
   </Provider>

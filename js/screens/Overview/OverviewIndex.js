@@ -1,43 +1,22 @@
 import React, { Component } from 'react';
-import { Alert, FlatList, StatusBar, StyleSheet, View } from 'react-native';
-import { Button, Text } from 'native-base';
+import { FlatList, StatusBar, StyleSheet, View } from 'react-native';
+import { Button, Icon, Text } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import TransactionOverview from '@components/overview/TransactionOverview';
+
+import { inject, observer } from 'mobx-react/native';
 
 import styles from '@styles/sarooStyles';
 import utilsStyles from '@styles/utilsStyles';
 
 import toMoney from '@utils/money';
-import { DEFAULT_PADDING, PRIMARY_COLOR } from '../../styles/variables';
+import { toMonthAndYear } from '@utils/dates';
 
-const data = [
-  {
-    name: 'Cachuelos',
-    date: 1484327532000,
-    amount: '600',
-    userKey: 'Bo1LiR5QosUuI3ghrY2Utoevf633',
-    savingKey: 'sv04',
-  },
-  {
-    amount: '200',
-    date: 1485018732000,
-    userKey: 'LlPqnpN1iEYGMzMvtp3A47z2vxo1',
-  },
-  {
-    date: 1485709932000,
-    amount: '-700',
-    userKey: 'LlPqnpN1iEYGMzMvtp3A47z2vxo1',
-  },
-  {
-    name: 'Cachuelos',
-    date: 1485709932000,
-    amount: '400',
-    userKey: 'X5Y77238hZRXQt6SOzZxLvvYQNi2',
-    savingKey: 'sv04',
-  },
-];
+import { DEFAULT_PADDING, PRIMARY_COLOR } from '@styles/variables';
 
+@inject('TransactionStore')
+@observer
 export default class OverviewIndex extends Component {
   state = {
     isDateTimePickerVisible: false,
@@ -45,6 +24,16 @@ export default class OverviewIndex extends Component {
 
   onChangeDate() {
     this.setState({ isDateTimePickerVisible: true });
+  }
+
+  onDateBack() {
+    const { TransactionStore } = this.props;
+    TransactionStore.goToPreviousMonth();
+  }
+
+  onDateForward() {
+    const { TransactionStore } = this.props;
+    TransactionStore.goToNextMonth();
   }
 
   onCreateIncome() {
@@ -61,15 +50,39 @@ export default class OverviewIndex extends Component {
     this.setState({ isDateTimePickerVisible: false });
   }
 
-  handleDatePicked(date) {
-    Alert.alert(date.getTime().toString());
+  handleDatePicked(dateObj) {
+    const { TransactionStore } = this.props;
+    const date = dateObj.getTime();
+    TransactionStore.updateDate(date);
     this.hideDateTimePicker();
+  }
+
+  renderTransactionsEmpty = () => (
+    <View>
+      <Text style={screenStyles.transactionsEmptyText}>No hay actividad en este mes!</Text>
+    </View>
+  );
+
+  renderTransactionsNormal() {
+    const { TransactionStore } = this.props;
+    return (
+      <FlatList
+        style={screenStyles.transactionsList}
+        data={TransactionStore.monthTransactions}
+        keyExtractor={item => item.key}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={{ height: DEFAULT_PADDING }} />}
+        renderItem={({ item }) => this.renderTransaction(item)}
+      />
+    );
   }
 
   renderTransaction = transaction =>
     <TransactionOverview transaction={transaction} />
 
   render() {
+    const { TransactionStore } = this.props;
+
     return (
       <View style={[utilsStyles.flex, styles.container]}>
         <StatusBar barStyle="dark-content" />
@@ -77,12 +90,24 @@ export default class OverviewIndex extends Component {
         <DateTimePicker
           isVisible={this.state.isDateTimePickerVisible}
           titleIOS="Escoger una fecha"
+          date={new Date(TransactionStore.selectedDate)}
           cancelTextIOS="Cancelar"
           onConfirm={(date) => { this.handleDatePicked(date); }}
           onCancel={() => { this.hideDateTimePicker(); }}
         />
 
-        <View>
+        <View style={screenStyles.dateActionsContainer}>
+          <View style={screenStyles.dateBackContainer}>
+            <Button
+              bordered
+              rounded
+              info
+              onPress={() => { this.onDateBack(); }}
+            >
+              <Icon name="ios-arrow-back" style={styles.icon} />
+            </Button>
+          </View>
+
           <Button
             bordered
             rounded
@@ -90,8 +115,24 @@ export default class OverviewIndex extends Component {
             style={screenStyles.dateContainer}
             onPress={() => { this.onChangeDate(); }}
           >
-            <Text style={screenStyles.date} uppercase={false}>Enero - 2017</Text>
+            <Text
+              style={screenStyles.date}
+              uppercase={false}
+            >
+              { toMonthAndYear(TransactionStore.selectedDate) }
+            </Text>
           </Button>
+
+          <View style={screenStyles.dateForwardContainer}>
+            <Button
+              bordered
+              rounded
+              info
+              onPress={() => { this.onDateForward(); }}
+            >
+              <Icon name="ios-arrow-forward" style={styles.icon} />
+            </Button>
+          </View>
         </View>
 
         <View style={screenStyles.resumeContainer}>
@@ -138,14 +179,10 @@ export default class OverviewIndex extends Component {
         </View>
 
         <View style={screenStyles.transactionsContainer}>
-          <FlatList
-            style={screenStyles.transactionsList}
-            data={data}
-            keyExtractor={item => item.amount}
-            showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => <View style={{ height: DEFAULT_PADDING }} />}
-            renderItem={({ item }) => this.renderTransaction(item)}
-          />
+          { TransactionStore.monthTransactions.length > 0 ?
+            this.renderTransactionsNormal() :
+            this.renderTransactionsEmpty()
+          }
         </View>
 
         <View style={{ height: DEFAULT_PADDING }} />
@@ -192,14 +229,21 @@ const screenStyles = StyleSheet.create({
     fontSize: 22,
   },
 
-  dateContainer: {
-    marginTop: 14,
-    alignSelf: 'center',
+  dateActionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingTop: 14,
   },
 
   date: {
     paddingLeft: 24,
     paddingRight: 24,
+  },
+
+  transactionsEmptyText: {
+    color: PRIMARY_COLOR,
+    fontStyle: 'italic',
+    alignSelf: 'center',
   },
 
   transactionsList: {

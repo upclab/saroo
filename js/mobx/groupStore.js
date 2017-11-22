@@ -1,8 +1,9 @@
 import { action, computed, observable } from 'mobx';
 
 import SavingStore from '@mobx/savingStore';
+import TransactionStore from '@mobx/transactionStore';
 
-import { groupsRef, savingsRef } from '@/firebaseApp';
+import { groupsRef, savingsRef, transactionsRef } from '@/firebaseApp';
 import { snapshotToArray, snapshotToObject } from '@/utilities/firebaseUtils';
 
 async function getGroup(groupKey) {
@@ -34,18 +35,38 @@ class GroupStore {
     // Unbind the old references
     if (this.selectedGroupKey) {
       savingsRef(this.selectedGroupKey).off();
+      transactionsRef(this.selectedGroupKey).off();
     }
 
     // Bind the new References
     this.selectedGroupKey = selectedGroupKey;
 
     if (fetchOnce) {
-      const quickSnapshot = await savingsRef(this.selectedGroupKey).once('value');
-      SavingStore.updateSavings(snapshotToArray(quickSnapshot));
+      const p1 = savingsRef(this.selectedGroupKey).once('value');
+      const p2 = transactionsRef(this.selectedGroupKey).once('value');
+
+      const promises = await Promise.all([p1, p2]);
+      const quickSavingsSnapshot = promises[0];
+      const quickTransactionsSnapshot = promises[1];
+
+      if (quickSavingsSnapshot.val()) {
+        SavingStore.updateSavings(snapshotToArray(quickSavingsSnapshot));
+      }
+      if (quickTransactionsSnapshot.val()) {
+        TransactionStore.updateTransactions(quickTransactionsSnapshot.val());
+      }
     }
 
     savingsRef(this.selectedGroupKey).on('value', (snapshot) => {
-      SavingStore.updateSavings(snapshotToArray(snapshot));
+      if (snapshot.val()) {
+        SavingStore.updateSavings(snapshotToArray(snapshot));
+      }
+    });
+
+    transactionsRef(this.selectedGroupKey).on('value', (snapshot) => {
+      if (snapshot.val()) {
+        TransactionStore.updateTransactions(snapshot.val());
+      }
     });
   }
 
@@ -56,4 +77,8 @@ class GroupStore {
 }
 
 const groupStore = new GroupStore();
+/* eslint-disable no-unused-expressions */
+groupStore.groups;
+groupStore.selectedGroupKey;
+
 export default groupStore;
