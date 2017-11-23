@@ -43,7 +43,7 @@ export async function signInWithEmail(email, password) {
   const p1 = GroupStore.fetchGroupsforUser(groupList);
   const p2 = GroupStore.updateSelectedGroupKey(defaultGroupKey);
 
-  AsyncStorage.setItem(GROUP_KEY_NAME, defaultGroupKey)
+  AsyncStorage.setItem(GROUP_KEY_NAME, defaultGroupKey);
   await Promise.all([p1, p2]);
   return Promise.resolve();
 }

@@ -14,7 +14,7 @@ export default class SavingsCreateNew extends React.Component {
   state = {
     name: '',
     meta: '',
-    amount: 0,
+    amount: '0',
   }
 
   onBack() {
@@ -28,7 +28,7 @@ export default class SavingsCreateNew extends React.Component {
 
     if (name.trim() === '') {
       Alert.alert('Porfavor ingresa un nombre para el nuevo fondo!');
-    } else if (meta === '') {
+    } else if (meta === '0') {
       Alert.alert('Porfavor ingresa una meta para el nuevo fondo!');
     } else {
       addSaving({ name, meta, initialAmount: amount });

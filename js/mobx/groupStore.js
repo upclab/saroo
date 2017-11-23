@@ -45,9 +45,7 @@ class GroupStore {
       const p1 = savingsRef(this.selectedGroupKey).once('value');
       const p2 = transactionsRef(this.selectedGroupKey).once('value');
 
-      const promises = await Promise.all([p1, p2]);
-      const quickSavingsSnapshot = promises[0];
-      const quickTransactionsSnapshot = promises[1];
+      const [quickSavingsSnapshot, quickTransactionsSnapshot] = await Promise.all([p1, p2]);
 
       if (quickSavingsSnapshot.val()) {
         SavingStore.updateSavings(snapshotToArray(quickSavingsSnapshot));

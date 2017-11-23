@@ -8,6 +8,12 @@ export function format(date, formatStr) {
   });
 }
 
+export function toLocalDate(timestamp) {
+  let date = timestamp;
+  date = parse(Number(timestamp));
+  return format(date, 'DD/MM/YYYY');
+}
+
 export function toDayAndMonths(timestamp) {
   let date = timestamp;
   date = parse(Number(timestamp));

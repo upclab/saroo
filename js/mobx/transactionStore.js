@@ -16,6 +16,25 @@ export async function addTransaction({ name, meta, initialAmount }) {
   });
 }
 
+export const outlayTags = [
+  {
+    name: 'Comida',
+    key: 'FOOD',
+  },
+  {
+    name: 'Regalos',
+    key: 'GIFT',
+  },
+  {
+    name: 'Transporte',
+    key: 'TRANS',
+  },
+  {
+    name: 'Otros',
+    key: 'OTHER',
+  },
+];
+
 class TransactionStore {
   @observable transactions = {};
   @observable selectedDate = Date.now();
@@ -55,6 +74,14 @@ class TransactionStore {
 
   @action goToNextMonth() {
     this.selectedDate = addMonths(this.selectedDate, +1).getTime();
+  }
+
+  @action addIncome() {
+    return this.todo || 'TODO';
+  }
+
+  @action addOutlay() {
+    return this.todo || 'TODO';
   }
 }
 
