@@ -9,11 +9,14 @@ import UserAvatar from '@components/user/UserAvatar';
 import {
   BACKGROUND_COLOR,
   BACKGROUND_DARKER_COLOR,
+  DANGER_COLOR,
   PRIMARY_COLOR,
 } from '@styles/variables';
 
 import styles from '@styles/sarooStyles';
 import utilsStyles from '@styles/utilsStyles';
+
+import { getOutlayTagName } from '@mobx/transactionStore';
 
 import toMoney from '@utils/money';
 import { toDayAndMonths } from '@utils/dates';
@@ -25,13 +28,46 @@ function onEdit() {
 @inject('SavingStore')
 @observer
 export default class TransactionOverview extends React.Component {
+  isOutlay() {
+    const { transaction } = this.props;
+
+    if (Number(transaction.amount) < 0) {
+      return true;
+    }
+    return false;
+  }
+
+  renderSavingOrOutlayTag() {
+    const { SavingStore, transaction } = this.props;
+    const isOutlay = this.isOutlay();
+
+    if (isOutlay) {
+      return (
+        <Text style={componentStyles(isOutlay).outlayTag}>
+          { getOutlayTagName(transaction.outlayTagKey) }
+        </Text>
+      );
+    }
+    return (
+      <Text style={componentStyles(isOutlay).saving}>
+        { SavingStore.getSavingName(transaction.savingKey) }
+      </Text>
+    );
+  }
+
   render() {
-    const { transaction, SavingStore } = this.props;
+    const { transaction } = this.props;
+    const isOutlay = this.isOutlay();
 
     return (
-      <View style={componentStyles.wrapper}>
+      <View
+        style={[
+          componentStyles(isOutlay).wrapper,
+          this.isOutlay() ? componentStyles(isOutlay).outlay : componentStyles(isOutlay).income,
+        ]}
+      >
         <View style={utilsStyles.level}>
-          <Text style={componentStyles.date}>
+          <Text style={componentStyles(isOutlay).date}>
             { toDayAndMonths(transaction.date) }
           </Text>
           <Icon
@@ -41,22 +77,20 @@ export default class TransactionOverview extends React.Component {
           />
         </View>
         <View style={utilsStyles.level}>
-          <View style={componentStyles.iconNameSavingContainer}>
+          <View style={componentStyles(isOutlay).iconNameSavingContainer}>
             <UserAvatar />
             <View style={styles.flex}>
-              <View style={componentStyles.nameSavingContainer}>
-                <Text style={componentStyles.name}>
+              <View style={componentStyles(isOutlay).nameSavingContainer}>
+                <Text style={componentStyles(isOutlay).name}>
                   {transaction.name}
                 </Text>
-                <Text style={componentStyles.saving}>
-                  { SavingStore.getSavingName(transaction.savingKey) }
-                </Text>
+                { this.renderSavingOrOutlayTag() }
               </View>
             </View>
           </View>
-          <View style={componentStyles.amountContainer}>
-            <Text style={componentStyles.amount}>
-              {toMoney(transaction.amount, 'PEN')}
+          <View style={componentStyles(isOutlay).amountContainer}>
+            <Text style={componentStyles(isOutlay).amount}>
+              {toMoney(isOutlay ? transaction.amount.slice(1) : transaction.amount, 'PEN')}
             </Text>
           </View>
         </View>
@@ -65,11 +99,11 @@ export default class TransactionOverview extends React.Component {
   }
 }
 
-const componentStyles = StyleSheet.create({
+const componentStyles = isOutlay => StyleSheet.create({
   wrapper: {
     height: 108,
-    backgroundColor: BACKGROUND_COLOR,
     padding: 12,
+    backgroundColor: BACKGROUND_COLOR,
   },
 
   iconNameSavingContainer: {
@@ -99,13 +133,19 @@ const componentStyles = StyleSheet.create({
     fontSize: 12,
   },
 
+  outlayTag: {
+    color: DANGER_COLOR,
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+
   amountContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-end',
   },
 
   amount: {
-    color: PRIMARY_COLOR,
+    color: isOutlay ? DANGER_COLOR : PRIMARY_COLOR,
     fontSize: 16,
     fontWeight: 'bold',
   },

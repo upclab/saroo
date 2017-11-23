@@ -50,8 +50,8 @@ export default class OverviewCreateIncome extends React.Component {
     } else {
       addIncome({
         name,
-        date,
         amount,
+        date,
         savingKey,
       });
       this.onBack();

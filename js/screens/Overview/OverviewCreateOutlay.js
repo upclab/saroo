@@ -49,8 +49,8 @@ export default class OverviewCreateOutlay extends React.Component {
     } else {
       addOutlay({
         name,
+        amount: `-${amount}`,
         date,
-        amount,
         outlayTagKey,
       });
       this.onBack();

@@ -1,20 +1,38 @@
 import { action, computed, observable } from 'mobx';
 import addMonths from 'date-fns/add_months';
 
-import { transactionRef } from '@/firebaseApp';
+import { transactionsRef } from '@/firebaseApp';
 import GroupStore from '@mobx/groupStore';
+import UserStore from '@mobx/userStore';
 
 import { objectToArray } from '@utils/firebaseUtils';
 
-export async function addTransaction({ name, meta, initialAmount }) {
-  const newTransactionRef = transactionRef(GroupStore.selectedGroupKey).push();
+export function transactionRefByTime(time) {
+  const date = new Date(time);
+  const year = date.getFullYear().toString();
+  const month = date.getMonth().toString();
 
-  await newTransactionRef.set({
-    name,
-    meta,
-    current: initialAmount,
-  });
+  return transactionsRef(GroupStore.selectedGroupKey)
+    .child(`Y${year}`)
+    .child(`M${month}`);
 }
+
+export async function addIncome(income) {
+  const { userKey } = UserStore;
+  const incomeObj = { userKey, ...income };
+
+  const newIncomeRef = transactionRefByTime(income.date).push();
+  await newIncomeRef.set(incomeObj);
+}
+
+export async function addOutlay(outlay) {
+  const { userKey } = UserStore;
+  const outlayObj = { userKey, ...outlay };
+
+  const newOutlayRef = transactionRefByTime(outlay.date).push();
+  await newOutlayRef.set(outlayObj);
+}
+
 
 export const outlayTags = [
   {
@@ -35,6 +53,17 @@ export const outlayTags = [
   },
 ];
 
+export function getOutlayTag(outlayTagKey) {
+  return outlayTags.find(o => o.key === outlayTagKey);
+}
+
+export function getOutlayTagName(outlayTagKey) {
+  if (!outlayTagKey) {
+    return (null);
+  }
+  return getOutlayTag(outlayTagKey).name;
+}
+
 class TransactionStore {
   @observable transactions = {};
   @observable selectedDate = Date.now();
@@ -44,14 +73,13 @@ class TransactionStore {
 
     const year = date.getFullYear().toString();
     const month = date.getMonth().toString();
-
-    const yearKey = Object.keys(this.transactions).find(y => y === year);
+    const yearKey = Object.keys(this.transactions).find(y => y === `Y${year}`);
     if (!yearKey) {
       return [];
     }
 
     const yearTransactionsObj = this.transactions[yearKey];
-    const monthKey = Object.keys(yearTransactionsObj).find(m => m === month);
+    const monthKey = Object.keys(yearTransactionsObj).find(m => m === `M${month}`);
     if (!monthKey) {
       return [];
     }
@@ -74,14 +102,6 @@ class TransactionStore {
 
   @action goToNextMonth() {
     this.selectedDate = addMonths(this.selectedDate, +1).getTime();
-  }
-
-  @action addIncome() {
-    return this.todo || 'TODO';
-  }
-
-  @action addOutlay() {
-    return this.todo || 'TODO';
   }
 }
 
