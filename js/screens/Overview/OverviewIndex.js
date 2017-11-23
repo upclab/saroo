@@ -46,6 +46,42 @@ export default class OverviewIndex extends Component {
     navigation.navigate('CreateNewOutlay');
   }
 
+  incomesTotal() {
+    const { monthTransactions } = this.props.TransactionStore;
+
+    let incomesTotalValue = 0;
+    monthTransactions.forEach((t) => {
+      const amount = Number(t.amount);
+      if (amount > 0) {
+        incomesTotalValue += amount;
+      }
+    });
+    return incomesTotalValue;
+  }
+
+  outlaysTotal() {
+    const { monthTransactions } = this.props.TransactionStore;
+
+    let outlaysTotalValue = 0;
+    monthTransactions.forEach((t) => {
+      const amount = Number(t.amount);
+      if (amount < 0) {
+        outlaysTotalValue += -Number(t.amount);
+      }
+    });
+    return outlaysTotalValue;
+  }
+
+  statement() {
+    const { monthTransactions } = this.props.TransactionStore;
+
+    let statementValue = 0;
+    monthTransactions.forEach((t) => {
+      statementValue += Number(t.amount);
+    });
+    return statementValue;
+  }
+
   hideDateTimePicker() {
     this.setState({ isDateTimePickerVisible: false });
   }
@@ -139,21 +175,21 @@ export default class OverviewIndex extends Component {
           <View style={screenStyles.resumeItemContainer}>
             <View style={utilsStyles.level}>
               <Text style={screenStyles.resumeItemLabel}>Ingresos</Text>
-              <Text style={screenStyles.resumeItemValue}>{toMoney('5000', 'PEN')}</Text>
+              <Text style={screenStyles.resumeItemValue}>{toMoney(this.incomesTotal(), 'PEN')}</Text>
             </View>
           </View>
 
           <View style={screenStyles.resumeItemContainer}>
             <View style={utilsStyles.level}>
               <Text style={screenStyles.resumeItemLabel}>Gastos</Text>
-              <Text style={screenStyles.resumeItemValue}>{toMoney('1200', 'PEN')}</Text>
+              <Text style={screenStyles.resumeItemValue}>{toMoney(this.outlaysTotal(), 'PEN')}</Text>
             </View>
           </View>
 
           <View style={screenStyles.resumeItemContainer}>
             <View style={utilsStyles.level}>
               <Text style={screenStyles.resumeLabel}>Total</Text>
-              <Text style={screenStyles.resumeValue}>{toMoney('1200', 'PEN')}</Text>
+              <Text style={screenStyles.resumeValue}>{toMoney(this.statement(), 'PEN')}</Text>
             </View>
           </View>
 
