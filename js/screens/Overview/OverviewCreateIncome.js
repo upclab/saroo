@@ -4,6 +4,8 @@ import { Button, Container, Icon, Input, Item, Text } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
+import isNumber from 'is-number';
+
 import { inject, observer } from 'mobx-react/native';
 
 import styles from '@styles/sarooStyles';
@@ -28,8 +30,14 @@ export default class OverviewCreateIncome extends React.Component {
     navigation.dispatch(NavigationActions.back());
   }
 
-  onChangeDate() {
+  onDateChanged() {
     this.setState({ isDateTimePickerVisible: true });
+  }
+
+  onAmountChanged(text) {
+    if (isNumber(text) || text === '') {
+      this.setState({ amount: text.trim() });
+    }
   }
 
   onDatePicked(dateObj) {
@@ -45,7 +53,7 @@ export default class OverviewCreateIncome extends React.Component {
 
     const date = TransactionStore.selectedDate;
 
-    if (amount === '0') {
+    if (amount === '0' || amount === '') {
       Alert.alert('Porfavor ingresa un monto!');
     } else {
       addIncome({
@@ -68,7 +76,7 @@ export default class OverviewCreateIncome extends React.Component {
 
   render() {
     const { SavingStore, TransactionStore } = this.props;
-    const { savingKey } = this.state;
+    const { savingKey, amount } = this.state;
 
     return (
       <Container style={styles.fluidContainer}>
@@ -114,7 +122,8 @@ export default class OverviewCreateIncome extends React.Component {
                 keyboardType="numeric"
                 placeholderTextColor={PRIMARY_COLOR}
                 underlineColorAndroid={PRIMARY_COLOR}
-                onChangeText={amount => this.setState({ amount })}
+                value={amount}
+                onChangeText={text => this.onAmountChanged(text)}
                 placeholder="S/. 0.00"
               />
             </Item>
