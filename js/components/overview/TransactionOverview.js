@@ -25,6 +25,7 @@ function onEdit() {
   Alert.alert('No tienes permisos para editar esta transacción!');
 }
 
+@inject('UserStore')
 @inject('SavingStore')
 @observer
 export default class TransactionOverview extends React.Component {
@@ -56,7 +57,7 @@ export default class TransactionOverview extends React.Component {
   }
 
   render() {
-    const { transaction } = this.props;
+    const { transaction, UserStore } = this.props;
     const isOutlay = this.isOutlay();
 
     return (
@@ -78,7 +79,7 @@ export default class TransactionOverview extends React.Component {
         </View>
         <View style={utilsStyles.level}>
           <View style={componentStyles(isOutlay).iconNameSavingContainer}>
-            <UserAvatar />
+            <UserAvatar user={UserStore.getUser(transaction.userKey)} />
             <View style={styles.flex}>
               <View style={componentStyles(isOutlay).nameSavingContainer}>
                 <Text style={componentStyles(isOutlay).name}>

@@ -34,7 +34,6 @@ export const SignedIn = TabNavigator(
   {
     initialRouteName: 'Overview',
     tabBarPosition: 'bottom',
-    swipeEnabled: false,
     tabBarComponent: (props) => {
       const { navigate } = props.navigation;
 
