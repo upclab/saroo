@@ -3,6 +3,8 @@ import { Alert, StatusBar, StyleSheet, View } from 'react-native';
 import { Button, Container, Icon, Input, Item, Text } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 
+import isNumber from 'is-number';
+
 // Styles
 import styles from '@styles/sarooStyles';
 import utilsStyles from '@styles/utilsStyles';
@@ -22,13 +24,25 @@ export default class SavingsCreateNew extends React.Component {
     navigation.dispatch(NavigationActions.back());
   }
 
+  onMetaChanged(text) {
+    if (isNumber(text) || text === '') {
+      this.setState({ meta: text.trim() });
+    }
+  }
+
+  onAmountChanged(text) {
+    if (isNumber(text) || text === '') {
+      this.setState({ amount: text.trim() });
+    }
+  }
+
   onCreateSaving() {
     const { name, meta, amount } = this.state;
     const { navigation } = this.props;
 
     if (name.trim() === '') {
       Alert.alert('Porfavor ingresa un nombre para el nuevo fondo!');
-    } else if (meta === '0') {
+    } else if (meta === '0' || meta === '') {
       Alert.alert('Porfavor ingresa una meta para el nuevo fondo!');
     } else {
       addSaving({ name, meta, initialAmount: amount });
@@ -37,6 +51,8 @@ export default class SavingsCreateNew extends React.Component {
   }
 
   render() {
+    const { meta, amount } = this.state;
+
     return (
       <Container style={styles.fluidContainer}>
         <StatusBar barStyle="dark-content" />
@@ -73,7 +89,8 @@ export default class SavingsCreateNew extends React.Component {
                 keyboardType="numeric"
                 placeholderTextColor={PRIMARY_COLOR}
                 underlineColorAndroid={PRIMARY_COLOR}
-                onChangeText={meta => this.setState({ meta })}
+                value={meta}
+                onChangeText={text => this.onMetaChanged(text)}
                 placeholder="Meta final"
               />
             </Item>
@@ -87,7 +104,8 @@ export default class SavingsCreateNew extends React.Component {
                 keyboardType="numeric"
                 placeholderTextColor={PRIMARY_COLOR}
                 underlineColorAndroid={PRIMARY_COLOR}
-                onChangeText={amount => this.setState({ amount })}
+                value={amount}
+                onChangeText={text => this.onAmountChanged(text)}
                 placeholder="Monto inicial"
               />
             </Item>
