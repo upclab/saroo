@@ -61,7 +61,12 @@ export default class GroupOverview extends React.Component {
     );
   }
 
-  renderUser = user => <UserIconName key={user.key} user={user} />;
+  renderUser(user) {
+    const { UserStore } = this.props;
+    return (
+      <UserIconName key={user.key} user={UserStore.getUser(user.key)} />
+    );
+  }
 
   render() {
     const { group, wrapperStyles } = this.props;

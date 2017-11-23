@@ -39,12 +39,12 @@ export async function signInWithEmail(email, password) {
   const groupList = snapshot.val();
   const defaultGroupKey = firstKey(groupList);
 
-  // Get The Groups
-  const p1 = GroupStore.fetchGroupsforUser(groupList);
-  const p2 = GroupStore.updateSelectedGroupKey(defaultGroupKey);
+  const p1 = UserStore.fetchUsers();
+  const p2 = GroupStore.fetchGroupsforUser(groupList);
+  const p3 = GroupStore.updateSelectedGroupKey(defaultGroupKey);
 
   AsyncStorage.setItem(GROUP_KEY_NAME, defaultGroupKey);
-  await Promise.all([p1, p2]);
+  await Promise.all([p1, p2, p3]);
   return Promise.resolve();
 }
 
