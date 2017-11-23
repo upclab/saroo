@@ -1,7 +1,8 @@
 import { action, computed, observable } from 'mobx';
 import addMonths from 'date-fns/add_months';
 
-import { transactionsRef } from '@/firebaseApp';
+import { transactionsRef, savingsRef } from '@/firebaseApp';
+import SavingStore from '@mobx/savingStore';
 import GroupStore from '@mobx/groupStore';
 import UserStore from '@mobx/userStore';
 
@@ -17,12 +18,24 @@ export function transactionRefByTime(time) {
     .child(`M${month}`);
 }
 
+export async function updateSaving(savingKey, amount) {
+  if (savingKey) {
+    const savingRef = savingsRef(GroupStore.selectedGroupKey).child(savingKey);
+    const newAmount = Number(SavingStore.getSaving(savingKey).current) + Number(amount);
+    await savingRef.update({ current: newAmount });
+  }
+  return Promise.resolve();
+}
+
 export async function addIncome(income) {
   const { userKey } = UserStore;
   const incomeObj = { userKey, ...income };
 
   const newIncomeRef = transactionRefByTime(income.date).push();
-  await newIncomeRef.set(incomeObj);
+  const p1 = newIncomeRef.set(incomeObj);
+  const p2 = updateSaving(income.savingKey, income.amount);
+
+  await Promise.all([p1, p2]);
 }
 
 export async function addOutlay(outlay) {
@@ -85,7 +98,7 @@ class TransactionStore {
     }
 
     const monthTransactionsObj = yearTransactionsObj[monthKey];
-    return objectToArray(monthTransactionsObj);
+    return objectToArray(monthTransactionsObj).sort((a, b) => b.date - a.date);
   }
 
   @action updateTransactions(transactions) {

@@ -101,7 +101,7 @@ export default class OverviewCreateIncome extends React.Component {
                 placeholderTextColor={PRIMARY_COLOR}
                 underlineColorAndroid={PRIMARY_COLOR}
                 onChangeText={name => this.setState({ name })}
-                placeholder="nombre del ahorro"
+                placeholder="nombre del ingreso"
               />
             </Item>
           </View>
