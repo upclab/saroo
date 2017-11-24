@@ -1,9 +1,11 @@
 import React from 'react';
 import { Alert, FlatList, StyleSheet, StatusBar, View } from 'react-native';
 import { Button, Container, Icon, Text } from 'native-base';
+import { NavigationActions } from 'react-navigation';
 
 import { inject, observer } from 'mobx-react/native';
 
+import TransactionOverview from '@components/overview/TransactionOverview';
 import SavingOverview from '@/components/savings/SavingOverview';
 import LoanOverview from '@/components/savings/LoanOverview';
 import AdOverview from '@/components/savings/AdOverview';
@@ -12,55 +14,35 @@ import Tab from '@/components/shared/Tab';
 // Styles
 import styles from '@styles/sarooStyles';
 import utilsStyles from '@styles/utilsStyles';
-import { DEFAULT_PADDING } from '@styles/variables';
-
-// TODO
-const saving = {
-  name: 'Televisor 4K',
-  meta: '4000',
-  current: '1500',
-};
-
-const loans = [
-  {
-    bank: 'BCP',
-    amount: '412.60',
-    time: '720',
-  },
-  {
-    bank: 'Scotiabank',
-    amount: '320.64',
-    time: '1080',
-  },
-  {
-    bank: 'Continental',
-    amount: '226.15',
-    time: '1440',
-  },
-];
+import { DEFAULT_PADDING, PRIMARY_COLOR, WHITE } from '@styles/variables';
 
 const ads = [
   {
+    key: '1',
     name: 'DisneyLand Resort',
     description: 'Paquete para 5 personas',
     amount: '7599.99',
   },
   {
+    key: '2',
     name: 'Reno Vacation',
     description: 'Paquete para 4 personas',
     amount: '6219.99',
   },
   {
+    key: '3',
     name: 'Despegar.com',
     description: 'Paquete para 5 personas',
     amount: '7599.99',
   },
   {
+    key: '4',
     name: 'Cot Travel',
     description: 'Paquete para parejas',
     amount: '3699.99',
   },
   {
+    key: '5',
     name: 'Disney Travel',
     description: 'Paquete para 2 personas',
     amount: '3999.99',
@@ -75,7 +57,8 @@ export default class SavingsSaving extends React.Component {
   }
 
   onBack() {
-    Alert.alert(this.state.selectedTab);
+    const { navigation } = this.props;
+    navigation.dispatch(NavigationActions.back());
   }
 
   onOpenCalculator() {
@@ -92,13 +75,16 @@ export default class SavingsSaving extends React.Component {
   renderLoan = loan =>
     <LoanOverview loan={loan} />
 
+  renderTransaction = transaction =>
+    <TransactionOverview transaction={transaction} />
+
   renderAdsTab() {
     return (
       <FlatList
         style={screenStyles.historialList}
         data={ads}
-        numColumns="2"
-        keyExtractor={item => item.bank}
+        horizontal={false}
+        keyExtractor={item => item.key}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() =>
           <View style={{ width: DEFAULT_PADDING, height: DEFAULT_PADDING }} />
@@ -109,18 +95,36 @@ export default class SavingsSaving extends React.Component {
   }
 
   renderHistorialTab() {
+    const { SavingStore } = this.props;
+
+    if (SavingStore.transactions.length > 0) {
+      return (
+        <FlatList
+          style={screenStyles.historialList}
+          data={SavingStore.transactions}
+          keyExtractor={item => item.key}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{ height: DEFAULT_PADDING }} />}
+          renderItem={({ item }) => this.renderTransaction(item)}
+        />
+      );
+    }
     return (
-      <Text>{this.state.selectedTab}</Text>
+      <View>
+        <Text style={screenStyles.transactionsEmptyText}>No se registraron transacciones!</Text>
+      </View>
     );
   }
 
   renderLoansTab() {
+    const { SavingStore } = this.props;
+
     return (
       <View style={utilsStyles.flex}>
         <FlatList
           style={screenStyles.loansList}
-          data={loans}
-          keyExtractor={item => item.bank}
+          data={SavingStore.loans}
+          keyExtractor={item => item.bankKey}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={{ height: DEFAULT_PADDING }} />}
           renderItem={({ item }) => this.renderLoan(item)}
@@ -150,6 +154,7 @@ export default class SavingsSaving extends React.Component {
   }
 
   render() {
+    const { SavingStore } = this.props;
     const { selectedTab } = this.state;
 
     return (
@@ -162,12 +167,12 @@ export default class SavingsSaving extends React.Component {
             name="ios-arrow-back"
             onPress={() => { this.onBack(); }}
           />
-          <Text style={styles.backTitle}>{saving.name}</Text>
+          <Text style={styles.backTitle}>{SavingStore.selectedSaving.name}</Text>
           <View style={styles.backAligner} />
         </View>
 
         <View style={[styles.bodyContainer, utilsStyles.flex]}>
-          <SavingOverview saving={saving} hideTitle />
+          <SavingOverview saving={SavingStore.selectedSaving} hideTitle />
           <View style={screenStyles.tabsContainer}>
             <Tab
               title="Prestamos"
@@ -189,7 +194,7 @@ export default class SavingsSaving extends React.Component {
             { this.renderTabContent() }
           </View>
         </View>
-        <View style={{ height: DEFAULT_PADDING }} />
+        <View style={{ height: DEFAULT_PADDING, backgroundColor: WHITE }} />
       </Container>
     );
   }
@@ -208,5 +213,11 @@ const screenStyles = StyleSheet.create({
     justifyContent: 'flex-end',
     marginTop: DEFAULT_PADDING,
     height: 60,
+  },
+
+  transactionsEmptyText: {
+    color: PRIMARY_COLOR,
+    fontStyle: 'italic',
+    alignSelf: 'center',
   },
 });

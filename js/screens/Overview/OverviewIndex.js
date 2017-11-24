@@ -3,9 +3,9 @@ import { FlatList, StatusBar, StyleSheet, View } from 'react-native';
 import { Button, Icon, Text } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-import TransactionOverview from '@components/overview/TransactionOverview';
-
 import { inject, observer } from 'mobx-react/native';
+
+import TransactionOverview from '@components/overview/TransactionOverview';
 
 import styles from '@styles/sarooStyles';
 import utilsStyles from '@styles/utilsStyles';

@@ -1,6 +1,7 @@
 import { StackNavigator } from 'react-navigation';
 
 import SavingsIndex from '@screens/Savings/SavingsIndex';
+import SavingsSaving from '@screens/Savings/SavingsSaving';
 import CreateNew from '@screens/Savings/SavingsCreateNew';
 
 export default StackNavigator(
@@ -10,6 +11,9 @@ export default StackNavigator(
     },
     CreateNew: {
       screen: CreateNew,
+    },
+    SavingsSaving: {
+      screen: SavingsSaving,
     },
   },
   {

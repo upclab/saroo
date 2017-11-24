@@ -9,7 +9,7 @@ import { signOut } from '@/auth';
 
 export default function ({ navigation }) {
   return (
-    <View style={[styles.container, utilsStyles.flexCentered]}>
+    <View style={[styles.container, utilsStyles.flex, utilsStyles.flexCentered]}>
       <Button
         danger
         style={utilsStyles.centerAligned}

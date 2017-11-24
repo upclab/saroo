@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import { SQUARE_SIZE } from '@components/user/UserAvatar';
 
@@ -21,7 +21,7 @@ export default class LoanOverview extends React.Component {
     return (
       <View style={componentStyles.wrapper}>
         <View style={utilsStyles.level}>
-          <View style={componentStyles.entityPhoto} />
+          <Image source={{ uri: loan.bank.photo }} style={componentStyles.entityPhoto} />
           <View>
             <View style={componentStyles.amountTimeContainer}>
               <Text style={componentStyles.amount}>

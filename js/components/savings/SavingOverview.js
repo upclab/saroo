@@ -20,9 +20,9 @@ export default class SavingOverview extends React.Component {
   }
 
   render() {
-    const { saving } = this.props;
+    const { saving, onPress } = this.props;
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPress}>
         { this.renderTitle() }
         <Bar
           color={PRIMARY_COLOR}

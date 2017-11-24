@@ -18,7 +18,19 @@ export default class Savings extends React.Component {
     navigation.navigate('CreateNew');
   }
 
-  renderSaving = saving => <SavingOverview key={saving.key} saving={saving} />
+  onViewSaving(savingKey) {
+    const { navigation, SavingStore } = this.props;
+    SavingStore.setSavingKey(savingKey);
+    navigation.navigate('SavingsSaving');
+  }
+
+  renderSaving = saving => (
+    <SavingOverview
+      onPress={() => this.onViewSaving(saving.key)}
+      key={saving.key}
+      saving={saving}
+    />
+  );
 
   render() {
     const { SavingStore } = this.props;
