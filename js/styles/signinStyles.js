@@ -39,9 +39,6 @@ export default StyleSheet.create({
   facebookButton: {
     color: '#3b5998',
   },
-  googleButton: {
-    color: '#d62d20',
-  },
   signUpTextWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',

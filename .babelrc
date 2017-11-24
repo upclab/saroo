@@ -10,6 +10,7 @@
         "@screens": "./js/screens",
         "@components": "./js/components",
         "@utils": "./js/utilities",
+        "@lib":  "./js/lib",
         "@mobx":  "./js/mobx",
         "@styles":  "./js/styles"
       }

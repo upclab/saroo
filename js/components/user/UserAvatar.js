@@ -5,7 +5,7 @@ import { Icon } from 'native-base';
 import { WHITE, BACKGROUND_DARKER_COLOR } from '@styles/variables';
 import utilsStyles from '@styles/utilsStyles';
 
-const SQUARE_SIZE = 48;
+export const SQUARE_SIZE = 48;
 
 export default class UserAvatar extends React.Component {
   renderUserPhoto() {

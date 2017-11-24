@@ -6,8 +6,14 @@ export default {
   fluidContainer: {
     marginTop: Expo.Constants.statusBarHeight,
     backgroundColor: WHITE,
-    paddingLeft: 5,
-    paddingRight: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+
+  bodyContainer: {
+    backgroundColor: WHITE,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
 
   container: {
@@ -21,6 +27,26 @@ export default {
     paddingTop: 14,
     paddingLeft: 10,
     paddingBottom: 14,
+  },
+
+  backActionContainer: {
+    marginTop: Expo.Constants.statusBarHeight,
+    backgroundColor: WHITE,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  backTitle: {
+    flex: 1,
+    alignSelf: 'center',
+    color: PRIMARY_COLOR,
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  backAligner: {
+    width: 30,
   },
 
   slimTitle: {

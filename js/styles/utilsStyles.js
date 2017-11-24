@@ -11,7 +11,6 @@ export default StyleSheet.create({
   },
 
   flexCentered: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

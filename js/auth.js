@@ -4,6 +4,7 @@ import { auth, groupListRef } from '@/firebaseApp';
 
 import UserStore from '@mobx/userStore';
 import GroupStore from '@mobx/groupStore';
+import BankStore from '@mobx/bankStore';
 
 import firstKey from '@/utilities/firstKey';
 
@@ -39,12 +40,13 @@ export async function signInWithEmail(email, password) {
   const groupList = snapshot.val();
   const defaultGroupKey = firstKey(groupList);
 
-  const p1 = UserStore.fetchUsers();
-  const p2 = GroupStore.fetchGroupsforUser(groupList);
-  const p3 = GroupStore.updateSelectedGroupKey(defaultGroupKey);
+  const p1 = BankStore.fetchBanks();
+  const p2 = UserStore.fetchUsers();
+  const p3 = GroupStore.fetchGroupsforUser(groupList);
+  const p4 = GroupStore.updateSelectedGroupKey(defaultGroupKey);
 
   AsyncStorage.setItem(GROUP_KEY_NAME, defaultGroupKey);
-  await Promise.all([p1, p2, p3]);
+  await Promise.all([p1, p2, p3, p4]);
   return Promise.resolve();
 }
 
