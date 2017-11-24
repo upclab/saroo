@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, FlatList, StyleSheet, StatusBar, View } from 'react-native';
+import { FlatList, StyleSheet, StatusBar, View } from 'react-native';
 import { Button, Container, Icon, Text } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 
@@ -62,7 +62,8 @@ export default class SavingsSaving extends React.Component {
   }
 
   onOpenCalculator() {
-    Alert.alert(this.state.selectedTab);
+    const { navigation } = this.props;
+    navigation.navigate('SavingsCalculator');
   }
 
   changeTab(tab) {

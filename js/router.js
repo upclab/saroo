@@ -53,12 +53,6 @@ export const SignedIn = TabNavigator(
               <Icon name="plane" />
             </Button>
             <Button
-              active={props.navigationState.index === 2}
-              onPress={() => navigate('Stats')}
-            >
-              <Icon name="ios-podium" />
-            </Button>
-            <Button
               active={props.navigationState.index === 3}
               onPress={() => navigate('Groups')}
             >

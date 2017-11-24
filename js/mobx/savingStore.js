@@ -37,7 +37,7 @@ class SavingStore {
     }
     let transactionsArray = [];
     const transactionsObj = TransactionStore.transactions;
-    
+
     Object.keys(transactionsObj).forEach((year) => {
       const yearObj = transactionsObj[year];
       Object.keys(yearObj).forEach((month) => {
